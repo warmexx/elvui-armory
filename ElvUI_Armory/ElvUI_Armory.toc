@@ -1,0 +1,12 @@
+## Interface: 70100
+## Title: |cff1784d1ElvUI|r Armory
+## Version: 2.0
+## Author: Warmexx [Neighbours]
+## Dependencies: ElvUI, Armory
+## OptionalDeps: ElvUI_ParchmentRemover
+## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
+## X-Website: http://www.wow-neighbours.com/
+
+SkinUtil.lua
+Armory.lua
+ArmoryGuildBank.lua

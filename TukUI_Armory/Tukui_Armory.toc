@@ -1,0 +1,11 @@
+## Interface: 70000
+## Title: |cffc495ddTukui|r Armory
+## Version: 1.12
+## Author: Warmexx [Neighbours]
+## Dependencies: Tukui, Armory
+## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
+## X-Website: http://www.wow-neighbours.com/
+
+SkinUtil.lua
+Armory.lua
+ArmoryGuildBank.lua
