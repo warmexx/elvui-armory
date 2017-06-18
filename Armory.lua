@@ -860,7 +860,9 @@ local function SkinQuests()
         if ( i == 1) then
             questItem:Point("TOPLEFT", ArmoryQuestInfoRewardsFrame.ItemChooseText, "BOTTOMLEFT", 0, -5);
         end
+
         SkinQuestInfoItem(questItem)
+        questItem.isSkinned = true
     end
  
     SkinQuestInfoItem(ArmoryQuestInfoSkillPointFrame)    
@@ -899,6 +901,11 @@ local function SkinQuests()
         
         for i, questItem in ipairs(ArmoryQuestInfoRewardsFrame.RewardButtons) do
             if not questItem:IsShown() then break end
+
+            if not questItem.isSkinned then
+                SkinQuestInfoItem(questItem)
+                questItem.isSkinned = true
+            end
 
             local point, relativeTo, relativePoint, x, y = questItem:GetPoint()
             if i == 1 then
@@ -1207,7 +1214,7 @@ local function SkinArtifacts()
     ArmoryArtifactFrame.BorderFrame:StripTextures()
     U.SkinCloseButton(ArmoryArtifactFrame.CloseButton)
 
-    ArmoryArtifactFrame.ForgeBadgeFrame.ForgeClassBadgeIcon:Hide()
+    ArmoryArtifactFrame.ForgeBadgeFrame.ItemIconBorder:Hide()
     ArmoryArtifactFrame.ForgeBadgeFrame.ForgeLevelBackground:ClearAllPoints()
     ArmoryArtifactFrame.ForgeBadgeFrame.ForgeLevelBackground:SetPoint("TOPLEFT", ArmoryArtifactFrame)
 end
