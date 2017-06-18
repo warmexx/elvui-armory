@@ -1120,6 +1120,8 @@ local function SkinTradeSkill()
             ResultIcon:GetNormalTexture():SetInside()
         end
         ResultIcon:SetTemplate("Default")
+		ResultIcon.IconBorder:SetTexture(nil)
+		ResultIcon.ResultBorder:SetTexture(nil)
 
         for i = 1, #ArmoryTradeSkillFrame.DetailsFrame.Contents.Reagents do
             local Button = ArmoryTradeSkillFrame.DetailsFrame.Contents.Reagents[i]
