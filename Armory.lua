@@ -1216,7 +1216,7 @@ local function SkinArtifacts()
     ArmoryArtifactFrame.BorderFrame:StripTextures()
     U.SkinCloseButton(ArmoryArtifactFrame.CloseButton)
 
-    ArmoryArtifactFrame.ForgeBadgeFrame.ItemIconBorder:Hide()
+    ArmoryArtifactFrame.ForgeBadgeFrame.ItemIcon:Hide()
     ArmoryArtifactFrame.ForgeBadgeFrame.ForgeLevelBackground:ClearAllPoints()
     ArmoryArtifactFrame.ForgeBadgeFrame.ForgeLevelBackground:SetPoint("TOPLEFT", ArmoryArtifactFrame)
 end
