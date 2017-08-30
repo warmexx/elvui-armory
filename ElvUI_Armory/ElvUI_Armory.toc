@@ -1,6 +1,6 @@
-## Interface: 70200
+## Interface: 70300
 ## Title: |cff1784d1ElvUI|r Armory
-## Version: 2.1
+## Version: 2.2
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
 ## OptionalDeps: ElvUI_ParchmentRemover
