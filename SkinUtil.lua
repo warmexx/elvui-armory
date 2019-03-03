@@ -47,7 +47,7 @@ end
 
 function U.SkinNextPrevButton(self, horizonal)
     if ElvUI then
-        s:HandleNextPrevButton(self, horizonal)
+        s:HandleNextPrevButton(self)
     elseif s.SkinNextPrevButton then
         s.SkinNextPrevButton(self, horizonal)
     elseif s.SkinArrowButton then
