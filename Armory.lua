@@ -1069,6 +1069,12 @@ local function SkinSocial()
     end
 end
 
+local function SkinRecipeList(self, _, tradeSkillInfo)
+	if tradeSkillInfo.hasProgressBar then
+        U.SkinStatusBar(self.SubSkillRankBar)
+	end
+end
+
 local function SkinTradeSkill()
     U.SkinArmoryFrame(ArmoryTradeSkillFrame, true)
     
@@ -1113,7 +1119,16 @@ local function SkinTradeSkill()
         point, relativeTo, relativePoint, x, y = ArmoryTradeSkillFrame.RecipeList.ScrollBar:GetPoint() 
         ArmoryTradeSkillFrame.RecipeList.ScrollBar:Point(point, relativeTo, relativePoint, 2, y)
     end)
-    
+ 
+    hooksecurefunc(ArmoryTradeSkillFrame.RecipeList, "Refresh", function()
+		for _, tradeSkillButton in ipairs(ArmoryTradeSkillFrame.RecipeList.buttons) do
+			if not tradeSkillButton.headerIsHooked then
+				hooksecurefunc(tradeSkillButton, "SetUpHeader", SkinRecipeList)
+				tradeSkillButton.headerIsHooked = true
+			end
+		end
+	end)
+   
     hooksecurefunc(ArmoryTradeSkillFrame.DetailsFrame, "RefreshDisplay", function()
         local ResultIcon = ArmoryTradeSkillFrame.DetailsFrame.Contents.ResultIcon
         ResultIcon:StyleButton()
