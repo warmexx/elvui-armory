@@ -29,6 +29,7 @@ end
 
 local function SkinInventory()
     ArmoryInventoryGuildBankFrame:Point("TOPRIGHT", -33, -86)
+    ArmoryInventoryGuildBankScrollFrame:StripTextures()
     U.SkinScrollBar(ArmoryInventoryGuildBankScrollFrameScrollBar)
 
     for i = 1, ARMORY_INVENTORY_LINES_DISPLAYED do
