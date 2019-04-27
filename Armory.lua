@@ -1071,7 +1071,7 @@ local function SkinTradeSkill()
     U.SkinArmoryFrame(ArmoryTradeSkillFrame, true)
     
     ArmoryTradeSkillFrame:StripTextures(true)
-    ArmoryTradeSkillFrame:SetTemplate("Transparent")
+    ArmoryTradeSkillFrame:CreateBackdrop("Transparent")
 
     ArmoryTradeSkillFrame.RecipeList:StripTextures()
     ArmoryTradeSkillFrame.DetailsFrame:StripTextures()
