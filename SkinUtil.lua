@@ -45,6 +45,12 @@ function U.SkinTab(self)
     end
 end
 
+function U.SkinIcon(self, backdrop)
+    if ElvUI then
+        s:HandleIcon(self, backdrop)
+    end
+end
+
 function U.SkinNextPrevButton(self, horizonal)
     if ElvUI then
         s:HandleNextPrevButton(self)
@@ -102,7 +108,7 @@ function U.SkinSliderFrame(self, height)
 end
 
 function U.SkinFrame(self)
-    self:StripTextures(True)
+    self:StripTextures(true)
     self:SetTemplate("Transparent")
 end
 

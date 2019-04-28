@@ -578,6 +578,42 @@ local function SkinPets()
     end
 end
 
+local function SkinTalents()
+    ArmoryTalentFrame:StripTextures()
+    ArmoryTalentFrame.bg:StripTextures()
+
+    local numSpecs = Armory:GetNumSpecializations()
+    for i = 1, numSpecs do
+        local button = ArmoryTalentFrame["specTab"..i]
+        local icon = button:GetNormalTexture()
+        button:StripTextures()
+        icon:SetTexCoord(unpack(c.TexCoords))
+    end
+
+    local specFrame = ArmoryTalentFrame.Spec
+
+    specFrame:CreateBackdrop()
+    specFrame.backdrop:Point("TOPLEFT", 8, -18)
+    specFrame.backdrop:Point("BOTTOMRIGHT", 30, 18)
+    specFrame.specIcon:Size(50, 50)
+    specFrame.specIcon:Point("LEFT", Button, "LEFT", 15, 0)
+    specFrame.specIcon:SetDrawLayer('ARTWORK', 2)
+    specFrame.roleIcon:SetDrawLayer('ARTWORK', 2)
+    specFrame.ring:SetAlpha(0)
+    U.SkinIcon(specFrame.specIcon, true)
+
+    for tier = 1, MAX_TALENT_TIERS do
+        for column = 1, NUM_TALENT_COLUMNS do
+            local button = ArmoryTalentFrame.Talents["tier"..tier]["talent"..column]
+            button:StripTextures()
+            button.icon:SetTexCoord(unpack(c.TexCoords))
+            button.border:SetOutside(button.icon)
+            button.border:SetColorTexture(1, 1, 1)
+            button.border:SetDrawLayer("BACKGROUND", -1)
+        end
+    end
+end
+
 local function SkinPVP()
     ArmoryPVPFrame:StripTextures(true)
     ArmoryPVPFrame:SetAllPoints()
@@ -1373,6 +1409,7 @@ Armory:Execute(function()
     SkinPaperDoll()
     SkinGearSet()
     SkinPets()
+    SkinTalents()
     SkinPVP()
     SkinOther()
     SkinInventory()
