@@ -658,16 +658,14 @@ local function SkinCurrency()
     ArmoryTokenFrame:HookScript("OnShow", function()
         for i = 1, Armory:GetCurrencyListSize() do
             local button = _G["ArmoryTokenFrameContainerButton"..i]
-            
+            local icon = _G["ArmoryTokenFrameContainerButton"..i.."Icon"]
             if button then
                 button.highlight:Kill()
                 button.categoryMiddle:Kill()    
                 button.categoryLeft:Kill()    
                 button.categoryRight:Kill()
                 
-                if button.Icon then
-                    button.Icon:SetTexCoord(unpack(c.TexCoords))
-                end
+                icon:SetTexCoord(unpack(c.TexCoords))
             end
         end
     end)
