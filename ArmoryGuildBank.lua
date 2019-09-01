@@ -83,8 +83,8 @@ local function SkinListGuildBank()
         ArmoryGuildBankFactionFrame:Point("TOP", 0, -62)
         
         if not self.searchBox then
-            ArmoryGuildBankFrameEditBox:SetHeight(20)
-            U.SkinSearchBox(ArmoryGuildBankFrameEditBox)
+            ArmoryGuildBankFrameEditBox:SetHeight(22)
+            U.SkinSearchBox(ArmoryGuildBankFrameEditBox, 135)
             self.searchBox = true
         end
         ArmoryGuildBankFrameEditBox:ClearAllPoints()
@@ -94,8 +94,7 @@ local function SkinListGuildBank()
         ArmoryGuildBankFilterDropDown:Point("TOPRIGHT", ArmoryListGuildBankFrameMoneyBackgroundFrame, "BOTTOMRIGHT",  40, 0)
         
         ArmoryGuildBankNameDropDown:ClearAllPoints()
-        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -15, -56)
-        ArmoryGuildBankNameDropDown:Width(160)
+        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -5, -56)
     end)
 end
 
@@ -157,8 +156,8 @@ local function SkinIconGuildBank()
         ArmoryGuildBankFactionFrame:Point("LEFT", ArmoryGuildBankNameDropDown, "RIGHT", 15, -3)
         
         if not self.searchBox then
-            ArmoryGuildBankFrameEditBox:SetHeight(20)
-            U.SkinSearchBox(ArmoryGuildBankFrameEditBox)
+            ArmoryGuildBankFrameEditBox:SetHeight(22)
+            U.SkinSearchBox(ArmoryGuildBankFrameEditBox, 135)
             self.searchBox = true
         end
         ArmoryGuildBankFrameEditBox:ClearAllPoints()
@@ -168,7 +167,7 @@ local function SkinIconGuildBank()
         ArmoryGuildBankFilterDropDown:Point("TOPRIGHT", 33, -35)
         
         ArmoryGuildBankNameDropDown:ClearAllPoints()
-        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -15, -3)
+        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -4, -3)
         ArmoryGuildBankNameDropDown:Width(160)
     end)
 end
@@ -177,7 +176,7 @@ local function SkinGuildBank()
     ArmoryGuildBankFrame.filter = ""
     
     ArmoryGuildBankFrameDeleteButton:Kill()
-    U.SkinDropDownBox(ArmoryGuildBankNameDropDown)
+    U.SkinDropDownBox(ArmoryGuildBankNameDropDown, 160)
 
     ArmoryGuildBankFilterDropDownText:ClearAllPoints()
     ArmoryGuildBankFilterDropDownText:Point("RIGHT", ArmoryGuildBankFilterDropDown, "RIGHT", 0, 0)
