@@ -61,6 +61,24 @@ function U.SkinNextPrevButton(self, horizonal)
     end
 end
 
+function U.SkinPlusMinButton(self, texture)
+    local tex = self:GetNormalTexture()
+    if not texture then
+        texture = tex:GetTexture()
+    end
+
+    tex:Size(15)
+    tex:SetTexCoord(0, 1, 0, 1)
+
+    if strfind(texture, "MinusButton") then
+        tex:SetTexture(c.Media.Textures.MinusButton)
+    elseif strfind(texture, "PlusButton") then
+        tex:SetTexture(c.Media.Textures.PlusButton)
+    else
+        tex:SetTexture()
+    end
+end
+
 function U.SkinEditBox(self)
     if ElvUI then
         s:HandleEditBox(self)
