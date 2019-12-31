@@ -245,7 +245,7 @@ local function SkinMinimapButton()
     ArmoryOptionsPanel_Refresh(ArmoryOptionsMinimapPanel)
 end
 
-local function SkinSkillFrame(frame)
+local function SkinBarFrame(frame)
     local name = frame:GetName()
     _G[name.."BackgroundBar"]:Kill()
     U.SkinStatusBar(_G[name.."Bar"])
@@ -298,8 +298,8 @@ local function SkinPaperDollSkills(suffix)
     frame:SetHeight(frame:GetHeight() + 8)
     frame:Point("TOPLEFT", "ArmoryPaperDollTalent"..suffix, "BOTTOMLEFT", 0, -3)
 
-    SkinSkillFrame(skill1)
-    SkinSkillFrame(skill2)
+    SkinBarFrame(skill1)
+    SkinBarFrame(skill2)
     skill2:Point("TOPLEFT", skill1, "BOTTOMLEFT", 0, -3)
 end
 
