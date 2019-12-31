@@ -112,9 +112,8 @@ function U.SkinFrame(self)
     self:SetTemplate("Transparent")
 end
 
-function U.SkinFrameD(self)
-    self:StripTextures(True)
-    self:SetTemplate("Default")
+function U.SkinTooltip(self)
+    self:SetTemplate("Transparent", nil, true)
 end
 
 function U.SkinStatusBar(self)

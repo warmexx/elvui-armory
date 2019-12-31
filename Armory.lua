@@ -224,7 +224,7 @@ local function SkinTooltips()
     end
     
     for _, name in ipairs(tooltips) do
-        U.SkinFrameD(_G[name])
+        U.SkinTooltip(_G[name])
         _G[name]:HookScript("OnShow", AdjustTooltip)
     end
 end
