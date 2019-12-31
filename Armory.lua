@@ -4,7 +4,7 @@ local U = select(2, ...)
 local s = U.s
 local c = U.c
 
-local hideParchment = IsAddOnLoaded("ElvUI_ParchmentRemover")
+local hideParchment = c.private.skins.parchmentRemover.enable
 
 local function ColorItemBorder(b, link)
     local quality, _

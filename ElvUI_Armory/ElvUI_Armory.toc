@@ -3,7 +3,6 @@
 ## Version: 2.6
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
-## OptionalDeps: ElvUI_ParchmentRemover
 ## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
 ## X-Website: http://www.wow-neighbours.com/
 
