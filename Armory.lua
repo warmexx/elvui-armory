@@ -215,7 +215,8 @@ local function SkinTooltips()
     }
    
     local function AdjustTooltip(tt)
-        local _, link = tt.GetItem and tt:GetItem()
+        if not tt.GetItem then return end
+        local _, link = tt:GetItem()
         local point, relativeTo, relativePoint, x, y = tt:GetPoint()
         local xAdd = point:find("LEFT") and 2 or -2
         tt:ClearAllPoints()
