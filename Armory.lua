@@ -701,7 +701,7 @@ end
 local function SkinCurrency()
     U.SkinScrollBar(ArmoryTokenFrameContainerScrollBar)
     
-    ArmoryTokenFrame:HookScript("OnShow", function()
+    hooksecurefunc("ArmoryTokenFrame_Update", function()
         for i = 1, Armory:GetCurrencyListSize() do
             local button = _G["ArmoryTokenFrameContainerButton"..i]
             local icon = _G["ArmoryTokenFrameContainerButton"..i.."Icon"]
@@ -712,6 +712,30 @@ local function SkinCurrency()
                 button.categoryRight:Kill()
                 
                 icon:SetTexCoord(unpack(c.TexCoords))
+
+                if not button.highlightTexture then
+                    button.highlightTexture = button:CreateTexture(button:GetName().."HighlightTexture", "HIGHLIGHT")
+                    button.highlightTexture:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
+                    button.highlightTexture:SetBlendMode("ADD")
+                    button.highlightTexture:SetInside(button.expandIcon)
+
+                    button.expandIcon:Point("LEFT", 4, 0)
+                    button.expandIcon:Size(15, 15)
+                end
+
+                if button.isHeader then
+                    if button.isExpanded then
+                        button.expandIcon:SetTexture(c.Media.Textures.MinusButton)
+                        button.expandIcon:SetTexCoord(0, 1, 0, 1)
+                    else
+                        button.expandIcon:SetTexture(c.Media.Textures.PlusButton)
+                        button.expandIcon:SetTexCoord(0, 1, 0, 1)
+                    end
+ 
+                    button.highlightTexture:Show()
+                else
+                    button.highlightTexture:Hide()
+                end
             end
         end
     end)
