@@ -77,7 +77,7 @@ end
 
 function U.SkinDropDownBox(self, width)
     if ElvUI then
-        s:HandleDropDownBox(self, width, true)
+        s:HandleDropDownBox(self, width)
     else
         s.SkinDropDown(self, width)
     end
