@@ -1,6 +1,6 @@
-## Interface: 80200
+## Interface: 80205
 ## Title: |cff1784d1ElvUI|r Armory
-## Version: 2.6
+## Version: 3.0
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
 ## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
