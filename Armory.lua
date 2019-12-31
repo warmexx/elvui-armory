@@ -598,8 +598,8 @@ local function SkinTalents()
     specFrame.backdrop:Point("BOTTOMRIGHT", 30, 18)
     specFrame.specIcon:Size(50, 50)
     specFrame.specIcon:Point("LEFT", Button, "LEFT", 15, 0)
-    specFrame.specIcon:SetDrawLayer('ARTWORK', 2)
-    specFrame.roleIcon:SetDrawLayer('ARTWORK', 2)
+    specFrame.specIcon:SetDrawLayer("ARTWORK", 2)
+    specFrame.roleIcon:SetDrawLayer("ARTWORK", 2)
     specFrame.ring:SetAlpha(0)
     U.SkinIcon(specFrame.specIcon, true)
 
@@ -650,7 +650,7 @@ local function SkinPVP()
     ArmoryPVPFrameTab2:StripTextures()
 
 	ArmoryPVPHonorXPBar:StripTextures() 
-    ArmoryPVPHonorXPBar.Bar:CreateBackdrop('Default')
+    ArmoryPVPHonorXPBar.Bar:CreateBackdrop("Default")
 end
 
 local function SkinReputation()
@@ -665,17 +665,26 @@ local function SkinReputation()
             if statusbar then
                 U.SkinStatusBar(statusbar)
                 
-                _G["ArmoryReputationBar"..i.."Background"]:SetTexture(nil)
+                _G["ArmoryReputationBar"..i.."Background"]:SetTexture()
                 _G["ArmoryReputationBar"..i.."LeftLine"]:Kill()
                 _G["ArmoryReputationBar"..i.."BottomLine"]:Kill()
-                _G["ArmoryReputationBar"..i.."ReputationBarHighlight1"]:SetTexture(nil)
-                _G["ArmoryReputationBar"..i.."ReputationBarHighlight2"]:SetTexture(nil)    
-                _G["ArmoryReputationBar"..i.."ReputationBarAtWarHighlight1"]:SetTexture(nil)
-                _G["ArmoryReputationBar"..i.."ReputationBarAtWarHighlight2"]:SetTexture(nil)
-                _G["ArmoryReputationBar"..i.."ReputationBarLeftTexture"]:SetTexture(nil)
-                _G["ArmoryReputationBar"..i.."ReputationBarRightTexture"]:SetTexture(nil)
+                _G["ArmoryReputationBar"..i.."ReputationBarHighlight1"]:SetTexture()
+                _G["ArmoryReputationBar"..i.."ReputationBarHighlight2"]:SetTexture()    
+                _G["ArmoryReputationBar"..i.."ReputationBarAtWarHighlight1"]:SetTexture()
+                _G["ArmoryReputationBar"..i.."ReputationBarAtWarHighlight2"]:SetTexture()
+                _G["ArmoryReputationBar"..i.."ReputationBarLeftTexture"]:SetTexture()
+                _G["ArmoryReputationBar"..i.."ReputationBarRightTexture"]:SetTexture()
             end        
         end
+    end)
+
+    hooksecurefunc("ArmoryReputationFrame_Update", function()
+		for i = 1, Armory:GetNumFactions() do
+			factionButton = _G["ArmoryReputationBar"..i.."ExpandOrCollapseButton"]
+            if factionButton then
+                U.SkinPlusMinButton(factionButton)
+			end
+		end
     end)
 end
 
