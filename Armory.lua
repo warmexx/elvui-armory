@@ -1456,6 +1456,32 @@ local function SkinAchievements()
             end        
         end
     end)
+
+    hooksecurefunc("ArmoryAchievementFrame_Update", function()
+        local offset = FauxScrollFrame_GetOffset(ArmoryAchievementListScrollFrame)
+        local numAchievements, isHeader
+        if ArmoryAchievementFrame.selected == "achievements" then
+            numAchievements = Armory:GetNumAchievements()
+        else
+            numAchievements = Armory:GetNumStatistics()
+        end
+
+        for i = 1, ARMORY_NUM_ACHIEVEMENTS_DISPLAYED do
+            index = offset + i
+            button = _G["ArmoryAchievementBar"..i.."ExpandOrCollapseButton"]
+            if index <= numAchievements then
+                if ArmoryAchievementFrame.selected == "achievements" then
+                    isHeader = select(3, Armory:GetAchievementInfo(index))
+                else
+                    isHeader = select(3, Armory:GetStatisticInfo(index))
+                end
+                if isHeader then
+                    U.SkinPlusMinButton(button)
+                end
+            end
+        end
+        U.SkinPlusMinButton(ArmoryAchievementCollapseAllButton)
+    end)
 end
 
 local function SkinArtifacts()
