@@ -830,7 +830,9 @@ local function SkinInventory()
     hooksecurefunc("ArmoryItemFilter_InitializeDropDown", function(self) ArmoryDropDownMenu_JustifyText(self, "RIGHT") end)
     
     ArmoryInventoryExpandButtonFrame:StripTextures()
-    ArmoryInventoryExpandButtonFrame:Point("TOPLEFT", 0, -60)
+    ArmoryInventoryExpandButtonFrame:Point("TOPLEFT", 1, -60)
+    ArmoryInventoryCollapseAllButton:GetNormalTexture():Size(15)
+    hooksecurefunc("ArmoryInventoryFrame_Update", function() U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton) end)
 
     ArmoryInventoryFrameTab1:ClearAllPoints()
     ArmoryInventoryFrameTab1:Point("TOPLEFT", ArmoryInventoryFrame, "BOTTOMLEFT", 19, 2)
@@ -838,7 +840,6 @@ local function SkinInventory()
     U.SkinTab(ArmoryInventoryFrameTab2)
     
     ArmoryInventoryIconViewFrame:Point("TOPRIGHT", -33, -86)
-    ArmoryInventoryIconViewFrame:Width(ArmoryInventoryIconViewFrame:GetWidth() + 1)
     ArmoryInventoryIconViewFrame:StripTextures()
     U.SkinScrollBar(ArmoryInventoryIconViewFrameScrollBar)
     U.SkinCheckBox(ArmoryInventoryIconViewFrameLayoutCheckButton)
@@ -846,9 +847,9 @@ local function SkinInventory()
 
     hooksecurefunc("ArmoryInventoryIconViewFrame_ShowContainer", function(containerFrame)
         local containerName = containerFrame:GetName()
-        local id = _G[containerName.."Label"]:GetID()
+        local label = _G[containerName.."Label"]
         local buttonBaseName = containerName.."Item"
-        if Armory:GetInventoryBagLayout() and id == ARMORY_VOID_CONTAINER then
+        if Armory:GetInventoryBagLayout() and label:GetID() == ARMORY_VOID_CONTAINER then
             buttonBaseName = containerName.."VoidItem"
         end
         
@@ -857,7 +858,11 @@ local function SkinInventory()
             SkinInventoryButton(_G[buttonBaseName..i])
             i = i + 1
         end
+
+        U.SkinPlusMinButton(label)
     end)    
+
+    hooksecurefunc("ArmoryInventoryIconViewFrame_Update", function() U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton) end)
 
     ArmoryInventoryListViewFrame:Point("TOPRIGHT", -33, -86)
     ArmoryInventoryListViewScrollFrame:StripTextures()
@@ -865,10 +870,19 @@ local function SkinInventory()
     U.SkinCheckBox(ArmoryInventoryListViewFrameSearchAllCheckButton)
     ArmoryInventoryListViewFrameSearchAllCheckButton:Point("TOPLEFT", ArmoryInventoryFrame, "TOPLEFT", 2, -2)
 
-    for i = 1 ,ARMORY_INVENTORY_LINES_DISPLAYED do
-        U.SkinInventoryLine(_G["ArmoryInventoryLine"..i])
-    end
-
+    hooksecurefunc("ArmoryInventoryListViewFrame_Update", function()
+        for i = 1, ARMORY_INVENTORY_LINES_DISPLAYED do
+            local button = _G["ArmoryInventoryLine"..i]
+            local isHeader = select(5, Armory:GetInventoryLineInfo(button:GetID()))
+            if isHeader then
+                U.SkinPlusMinButton(button)
+            else
+                U.SkinInventoryLine(button)
+            end
+        end
+        U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton)
+    end)
+    
     hooksecurefunc(Armory, "SetItemLink", function(self, button, link)
         if button.searchOverlay and button.searchOverlay:IsVisible() then
             return
@@ -880,29 +894,39 @@ local function SkinInventory()
     end)
 end
 
-local function SkinQuestInfoItem(item)
-    item:StripTextures()
-    item:SetTemplate("Default")
-    item:StyleButton()
-    item:Width(item:GetWidth() - 4)
-    item.Icon:SetTexCoord(unpack(c.TexCoords))
-    item.Icon:SetDrawLayer("OVERLAY")
-    item.Icon:Point("TOPLEFT", 2, -2)
-    item.Icon:Size(item.Icon:GetWidth() - 2, item.Icon:GetHeight() - 2)
-    item.Count:SetDrawLayer("OVERLAY")
+local function SkinReward(frame)
+    if not frame then return end
+
+    if frame.Icon then 
+        U.SkinIcon(frame.Icon, true)
+
+        frame.Count:ClearAllPoints()
+        frame.Count:Point("BOTTOMRIGHT", frame.Icon, "BOTTOMRIGHT", 2, 0)
+    end
+
+    if frame.NameFrame then
+		frame.NameFrame:SetAlpha(0)
+	end
+
+	if frame.Name then
+		frame.Name:SetFontObject("GameFontHighlightSmall")
+	end
+
+	if frame.CircleBackground then
+		frame.CircleBackground:SetAlpha(0)
+		frame.CircleBackgroundGlow:SetAlpha(0)
+    end
 end
 
-local function SkinQuests()
-    U.SkinArmoryFrame(ArmoryQuestFrame, true)
-
-    U.SkinSearchBox(ArmoryQuestFrameEditBox)
-    ArmoryQuestFrameEditBox:ClearAllPoints()
-    ArmoryQuestFrameEditBox:Point("TOPLEFT", 8, -35)
-
+local function SkinQuestLog()
     ArmoryQuestLogFrame:StripTextures()
     ArmoryQuestLogFrame:Point("TOPLEFT", -12, 12)
-    ArmoryQuestLogExpandButtonFrame:Kill()
-   
+
+    ArmoryQuestLogExpandButtonFrame:Point("TOPLEFT", 22, -69)
+    ArmoryQuestLogCollapseAllButton:StripTextures()
+    ArmoryQuestLogCollapseAllButton:SetNormalTexture(c.Media.Textures.PlusButton)
+    hooksecurefunc("ArmoryQuestLog_Update", function() U.SkinPlusMinButton(ArmoryQuestLogCollapseAllButton) end)
+
     ArmoryQuestFrameTab1:ClearAllPoints()
     ArmoryQuestFrameTab1:Point("TOPLEFT", ArmoryQuestFrame, "BOTTOMLEFT", 19, 2)
     ArmoryQuestFrameTab2:Point("LEFT", ArmoryQuestFrameTab1, "RIGHT", -16, 0)
@@ -913,7 +937,10 @@ local function SkinQuests()
     
     ArmoryQuestLogListScrollFrame:SetTemplate()
     ArmoryQuestLogListScrollFrame:Width(298)
+    ArmoryQuestLogListScrollFrame:Point("TOPLEFT", 19, -94)
     U.SkinScrollBar(ArmoryQuestLogListScrollFrameScrollBar)
+
+    ArmoryQuestLogTitle1:Point("TOPLEFT", 19, -94)
     
     ArmoryQuestLogDetailScrollFrame:SetTemplate()
     ArmoryQuestLogDetailScrollFrame:Width(298)
@@ -926,75 +953,168 @@ local function SkinQuests()
         ArmoryQuestLogDetailScrollFrame.bg:Size(503, 356)
     end
 
-    for i, questItem in ipairs(ArmoryQuestInfoRewardsFrame.RewardButtons) do
-        if ( i == 1) then
-            questItem:Point("TOPLEFT", ArmoryQuestInfoRewardsFrame.ItemChooseText, "BOTTOMLEFT", 0, -5);
-        end
+    ArmoryQuestInfoSkillPointFrame:StripTextures()
+	ArmoryQuestInfoSkillPointFrame:StyleButton()
+	ArmoryQuestInfoSkillPointFrame:Width(ArmoryQuestInfoSkillPointFrame:GetWidth() - 4)
+    ArmoryQuestInfoSkillPointFrame:SetFrameLevel(ArmoryQuestInfoSkillPointFrame:GetFrameLevel() + 2)
+    ArmoryQuestInfoSkillPointFrame:SetHighlightTexture(nil)
 
-        SkinQuestInfoItem(questItem)
-        questItem.isSkinned = true
-    end
- 
-    SkinQuestInfoItem(ArmoryQuestInfoSkillPointFrame)    
-    ArmoryQuestInfoSkillPointFrame.ValueText:ClearAllPoints()
-    ArmoryQuestInfoSkillPointFrame.ValueText:Point("BOTTOMRIGHT", ArmoryQuestInfoSkillPointFrame.Icon, "BOTTOMRIGHT")
+	ArmoryQuestInfoSkillPointFrameIconTexture:SetTexCoord(unpack(c.TexCoords))
+	ArmoryQuestInfoSkillPointFrameIconTexture:SetDrawLayer("OVERLAY")
+	ArmoryQuestInfoSkillPointFrameIconTexture:Point("TOPLEFT", 2, -2)
+	ArmoryQuestInfoSkillPointFrameIconTexture:Size(ArmoryQuestInfoSkillPointFrameIconTexture:GetWidth() - 2, ArmoryQuestInfoSkillPointFrameIconTexture:GetHeight() - 2)
+	ArmoryQuestInfoSkillPointFrame:CreateBackdrop()
+    ArmoryQuestInfoSkillPointFrameCount:SetDrawLayer("OVERLAY")
 
     ArmoryQuestLogQuestCount:ClearAllPoints()
-    ArmoryQuestLogQuestCount:Point("BOTTOMLEFT", ArmoryQuestLogFrame, "BOTTOMLEFT", 20, 57)
-    
-    hooksecurefunc("ArmoryQuestInfo_Display", function(template, parentFrame)
-        if hideParchment then
-            local textColor, titleTextColor = {1, 1, 1}, {1, 1, 0} 
-            -- headers
-            ArmoryQuestInfoTitleHeader:SetTextColor(titleTextColor[1], titleTextColor[2], titleTextColor[3])
-            ArmoryQuestInfoDescriptionHeader:SetTextColor(titleTextColor[1], titleTextColor[2], titleTextColor[3])
-            ArmoryQuestInfoObjectivesHeader:SetTextColor(titleTextColor[1], titleTextColor[2], titleTextColor[3])
-            ArmoryQuestInfoRewardsFrame.Header:SetTextColor(titleTextColor[1], titleTextColor[2], titleTextColor[3])
-            -- other text
-            ArmoryQuestInfoDescriptionText:SetTextColor(textColor[1], textColor[2], textColor[3])
-            ArmoryQuestInfoObjectivesText:SetTextColor(textColor[1], textColor[2], textColor[3])
-            ArmoryQuestInfoGroupSize:SetTextColor(textColor[1], textColor[2], textColor[3])
-            ArmoryQuestInfoRewardText:SetTextColor(textColor[1], textColor[2], textColor[3])
-            -- reward frame text
-            ArmoryQuestInfoRewardsFrame.ItemChooseText:SetTextColor(textColor[1], textColor[2], textColor[3])
-            ArmoryQuestInfoRewardsFrame.ItemReceiveText:SetTextColor(textColor[1], textColor[2], textColor[3])
-            ArmoryQuestInfoRewardsFrame.PlayerTitleText:SetTextColor(textColor[1], textColor[2], textColor[3])		
-            ArmoryQuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(textColor[1], textColor[2], textColor[3])
+    ArmoryQuestLogQuestCount:Point("BOTTOMRIGHT", ArmoryQuestLogListScrollFrame, "TOPRIGHT", 18, 8)
 
-            for _, objective in ipairs(ArmoryQuestInfoObjectivesFrame.Objectives) do
-                local r = objective:GetTextColor()
-                if r == 0 then
-                    objective:SetTextColor(0.6, 0.6, 0.6)
-                end
-            end
-        end
-        
+    hooksecurefunc("ArmoryQuestInfo_Display", function(template, parentFrame)
         for i, questItem in ipairs(ArmoryQuestInfoRewardsFrame.RewardButtons) do
             if not questItem:IsShown() then break end
 
-            if not questItem.isSkinned then
-                SkinQuestInfoItem(questItem)
-                questItem.isSkinned = true
-            end
-
             local point, relativeTo, relativePoint, x, y = questItem:GetPoint()
-            if i == 1 then
-                questItem:Point(point, relativeTo, relativePoint, 0, y)
-            elseif relativePoint == "BOTTOMLEFT" then
-                questItem:Point(point, relativeTo, relativePoint, 0, -4)
-            elseif point then
-                questItem:Point(point, relativeTo, relativePoint, 4, 0)
+            if point and relativeTo and relativePoint then
+                if i == 1 then
+                    questItem:Point(point, relativeTo, relativePoint, 0, y)
+                elseif relativePoint == "BOTTOMLEFT" then
+                    questItem:Point(point, relativeTo, relativePoint, 0, -4)
+                elseif point then
+                    questItem:Point(point, relativeTo, relativePoint, 4, 0)
+                end
             end
 
             questItem.Name:SetTextColor(1, 1, 1)
         end
+
+        local rewardsFrame = ArmoryQuestInfoFrame.rewardsFrame
+		local numSpellRewards = Armory:GetNumQuestLogRewardSpells()
+		if numSpellRewards > 0 then
+			if hideParchment then
+				for spellHeader in rewardsFrame.spellHeaderPool:EnumerateActive() do
+					spellHeader:SetVertexColor(1, 1, 1)
+				end
+			end
+
+			for followerReward in rewardsFrame.followerRewardPool:EnumerateActive() do
+				if not followerReward.isSkinned then
+					followerReward:CreateBackdrop()
+					followerReward.backdrop:SetAllPoints(followerReward.BG)
+					followerReward.backdrop:SetPoint("TOPLEFT", 40, -5)
+					followerReward.backdrop:SetPoint("BOTTOMRIGHT", 2, 5)
+					followerReward.BG:Hide()
+
+					followerReward.PortraitFrame:ClearAllPoints()
+					followerReward.PortraitFrame:SetPoint("RIGHT", followerReward.backdrop, "LEFT", -2, 0)
+
+					followerReward.PortraitFrame.PortraitRing:Hide()
+					followerReward.PortraitFrame.PortraitRingQuality:SetTexture()
+					followerReward.PortraitFrame.LevelBorder:SetAlpha(0)
+					followerReward.PortraitFrame.Portrait:SetTexCoord(0.2, 0.85, 0.2, 0.85)
+
+					local level = followerReward.PortraitFrame.Level
+					level:ClearAllPoints()
+					level:SetPoint("BOTTOM", followerReward.PortraitFrame, 0, 3)
+
+					local squareBG = CreateFrame("Frame", nil, followerReward.PortraitFrame)
+					squareBG:SetFrameLevel(followerReward.PortraitFrame:GetFrameLevel()-1)
+					squareBG:SetPoint("TOPLEFT", 2, -2)
+					squareBG:SetPoint("BOTTOMRIGHT", -2, 2)
+					squareBG:SetTemplate()
+					followerReward.PortraitFrame.squareBG = squareBG
+
+					followerReward.isSkinned = true
+				end
+
+				local r, g, b = followerReward.PortraitFrame.PortraitRingQuality:GetVertexColor()
+				followerReward.PortraitFrame.squareBG:SetBackdropBorderColor(r, g, b)
+			end
+		end
+
+        if hideParchment then
+            ArmoryQuestInfoTitleHeader:SetTextColor(1, .8, .1)
+			ArmoryQuestInfoDescriptionHeader:SetTextColor(1, .8, .1)
+			ArmoryQuestInfoObjectivesHeader:SetTextColor(1, .8, .1)
+			ArmoryQuestInfoRewardsFrame.Header:SetTextColor(1, .8, .1)
+			ArmoryQuestInfoDescriptionText:SetTextColor(1, 1, 1)
+			ArmoryQuestInfoObjectivesText:SetTextColor(1, 1, 1)
+			ArmoryQuestInfoGroupSize:SetTextColor(1, 1, 1)
+			ArmoryQuestInfoRewardText:SetTextColor(1, 1, 1)
+			ArmoryQuestInfoQuestType:SetTextColor(1, 1, 1)
+			ArmoryQuestInfoRewardsFrame.ItemChooseText:SetTextColor(1, 1, 1)
+			ArmoryQuestInfoRewardsFrame.ItemReceiveText:SetTextColor(1, 1, 1)
+
+            if ArmoryQuestInfoRewardsFrame.SpellLearnText then
+                ArmoryQuestInfoRewardsFrame.SpellLearnText:SetTextColor(1, 1, 1)
+            end
+
+			ArmoryQuestInfoRewardsFrame.PlayerTitleText:SetTextColor(1, 1, 1)
+            ArmoryQuestInfoRewardsFrame.XPFrame.ReceiveText:SetTextColor(1, 1, 1)
+            
+			local numObjectives = Armory:GetNumQuestLeaderBoards()
+            local numVisibleObjectives = 0
+            for i = 1, numObjectives do
+				local _, type, finished = Armory:GetQuestLogLeaderBoard(i)
+				if (type ~= "spell" and type ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
+					numVisibleObjectives = numVisibleObjectives + 1
+					local objective = ArmoryQuestInfoObjectivesFrame.Objectives[numVisibleObjectives]
+                    if objective then
+                         if finished then
+							objective:SetTextColor(1, .8, .1)
+						else
+							objective:SetTextColor(.63, .09, .09)
+                        end
+					end
+				end
+            end
+
+            local spellID, _, _, finished = Armory:GetQuestLogCriteriaSpell()
+            if spellID then
+                if finished then
+                    ArmoryQuestInfoSpellObjectiveLearnLabel:SetTextColor(1, .8, .1)
+                else
+                    ArmoryQuestInfoSpellObjectiveLearnLabel:SetTextColor(.63, .09, .09)
+                end
+            end
+        end
     end)
-        
+    
+	local Rewards = { "MoneyFrame", "HonorFrame", "XPFrame", "ArtifactXPFrame", "SkillPointFrame" }
+
+    for _, frame in pairs(Rewards) do
+		SkinReward(ArmoryQuestInfoRewardsFrame[frame])
+    end
+    
+	ArmoryQuestInfoPlayerTitleFrame.FrameLeft:SetTexture()
+	ArmoryQuestInfoPlayerTitleFrame.FrameCenter:SetTexture()
+	ArmoryQuestInfoPlayerTitleFrame.FrameRight:SetTexture()
+	ArmoryQuestInfoPlayerTitleFrame.Icon:SetTexCoord(unpack(c.TexCoords))
+	ArmoryQuestInfoPlayerTitleFrame:CreateBackdrop()
+	ArmoryQuestInfoPlayerTitleFrame.backdrop:SetOutside(ArmoryQuestInfoPlayerTitleFrame.Icon)
+
+    for i = 1, ARMORY_QUESTS_DISPLAYED do
+        local questLogTitle = _G["ArmoryQuestLogTitle"..i]
+
+        questLogTitle:SetNormalTexture(c.Media.Textures.PlusButton)
+		questLogTitle.SetNormalTexture = c.noop
+
+		questLogTitle:GetNormalTexture():Size(15)
+		questLogTitle:GetNormalTexture():Point("LEFT", 5, 0)
+    
+        hooksecurefunc(questLogTitle, "SetNormalTexture", function(self, texture) U.SkinPlusMinButton(self, texture) end)
+    end
+end
+
+local function SkinQuestHistory()
     ArmoryQuestHistoryFrame:StripTextures()
     ArmoryQuestHistoryFrame:Point("TOPLEFT", -12, 12)
+
     ArmoryQuestHistoryExpandButtonFrame:Kill()
-    U.SkinScrollBar(ArmoryQuestHistoryScrollFrameScrollBar)
     
+    ArmoryQuestHistoryScrollFrame:StripTextures()
+    ArmoryQuestHistoryScrollFrame:Point("TOPRIGHT", -67, -75)
+    U.SkinScrollBar(ArmoryQuestHistoryScrollFrameScrollBar)
+
     ArmoryQuestHistoryGroupByDateButton:Hide()
     local checkBox = CreateFrame("CheckButton", nil, ArmoryQuestHistoryFrame, "UICheckButtonTemplate")
     checkBox:Size(24, 24)
@@ -1005,6 +1125,29 @@ local function SkinQuests()
         Armory:SetQuestHistoryGroupByDate(self:GetChecked())
         ArmoryQuestHistory_Update()
     end)
+
+    for i = 1, ARMORY_QUESTHISTORY_DISPLAYED do
+        local questHistoryTitle = _G["ArmoryQuestHistoryTitle"..i]
+
+        questHistoryTitle:SetNormalTexture(c.Media.Textures.PlusButton)
+		questHistoryTitle.SetNormalTexture = c.noop
+
+		questHistoryTitle:GetNormalTexture():Size(15)
+		questHistoryTitle:GetNormalTexture():Point("LEFT", 5, 0)
+    
+        hooksecurefunc(questHistoryTitle, "SetNormalTexture", function(self, texture) U.SkinPlusMinButton(self, texture) end)
+    end
+end
+
+local function SkinQuests()
+    U.SkinArmoryFrame(ArmoryQuestFrame, true)
+
+    U.SkinSearchBox(ArmoryQuestFrameEditBox)
+    ArmoryQuestFrameEditBox:ClearAllPoints()
+    ArmoryQuestFrameEditBox:Point("TOPLEFT", 8, -35)
+
+    SkinQuestLog()
+    SkinQuestHistory()
 end
 
 local function SkinSpellLineTab(tab)
