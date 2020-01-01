@@ -32,20 +32,14 @@ local function SkinInventory()
     ArmoryInventoryGuildBankScrollFrame:StripTextures()
     U.SkinScrollBar(ArmoryInventoryGuildBankScrollFrameScrollBar)
 
-    hooksecurefunc("ArmoryInventoryGuildBankFrame_Update", function() U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton) end)
-
     hooksecurefunc("ArmoryInventoryGuildBankFrame_Update", function()
-        local offset = FauxScrollFrame_GetOffset(ArmoryInventoryGuildBankScrollFrame);
-
         for i = 1, ARMORY_INVENTORY_LINES_DISPLAYED do
-            local index = i + offset;
             local button = _G["ArmoryInventoryGuildBankLine"..i]
-            if index <= #ArmoryInventoryGuildBankFrame.itemLines then
-                local _, isHeader = unpack(ArmoryInventoryGuildBankFrame.itemLines[index]);
-                if isHeader then
-                    U.SkinPlusMinButton(button)
+            if button:GetID() > 0 then
+                if button.isCollapsed then
+                    U.SkinPlusMinButton(button, "PlusButton")
                 else
-                    U.SkinInventoryLine(button)
+                    U.SkinPlusMinButton(button, "MinusButton")
                 end
             end
         end

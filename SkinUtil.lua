@@ -62,7 +62,7 @@ function U.SkinNextPrevButton(self, horizonal)
 end
 
 function U.SkinPlusMinButton(self, texture)
-    local tex = self:GetNormalTexture()
+    local tex = self.GetNormalTexture and self:GetNormalTexture() or self
     if not texture then
         texture = tex:GetTexture()
     end

@@ -732,11 +732,9 @@ local function UpdateCurrencySkins()
 
 				if button.isHeader then
 					if button.isExpanded then
-						button.expandIcon:SetTexture(c.Media.Textures.MinusButton)
-						button.expandIcon:SetTexCoord(0,1,0,1)
+						U.SkinPlusMinButton(button.expandIcon, "MinusButton")
 					else
-						button.expandIcon:SetTexture(c.Media.Textures.PlusButton)
-						button.expandIcon:SetTexCoord(0,1,0,1)
+						U.SkinPlusMinButton(button.expandIcon, "PlusButton")
 					end
 
 					button.highlightTexture:Show()
@@ -939,7 +937,7 @@ local function SkinQuestLog()
 
     ArmoryQuestLogExpandButtonFrame:Point("TOPLEFT", 22, -69)
     ArmoryQuestLogCollapseAllButton:StripTextures()
-    ArmoryQuestLogCollapseAllButton:SetNormalTexture(c.Media.Textures.PlusButton)
+    U.SkinPlusMinButton(ArmoryQuestLogCollapseAllButton, "PlusButton")
     hooksecurefunc("ArmoryQuestLog_Update", function() U.SkinPlusMinButton(ArmoryQuestLogCollapseAllButton) end)
 
     ArmoryQuestFrameTab1:ClearAllPoints()
@@ -1110,7 +1108,7 @@ local function SkinQuestLog()
     for i = 1, ARMORY_QUESTS_DISPLAYED do
         local questLogTitle = _G["ArmoryQuestLogTitle"..i]
 
-        questLogTitle:SetNormalTexture(c.Media.Textures.PlusButton)
+        U.SkinPlusMinButton(questLogTitle, "PlusButton")
 		questLogTitle.SetNormalTexture = c.noop
 
 		questLogTitle:GetNormalTexture():Size(15)
@@ -1144,7 +1142,7 @@ local function SkinQuestHistory()
     for i = 1, ARMORY_QUESTHISTORY_DISPLAYED do
         local questHistoryTitle = _G["ArmoryQuestHistoryTitle"..i]
 
-        questHistoryTitle:SetNormalTexture(c.Media.Textures.PlusButton)
+        U.SkinPlusMinButton(questHistoryTitle, "PlusButton")
 		questHistoryTitle.SetNormalTexture = c.noop
 
 		questHistoryTitle:GetNormalTexture():Size(15)
