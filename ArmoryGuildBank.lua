@@ -79,6 +79,7 @@ local function SkinListGuildBank()
     ArmoryListGuildBankFrameMoneyBackgroundFrame:ClearAllPoints()
     ArmoryListGuildBankFrameMoneyBackgroundFrame:Point("TOPRIGHT", -8, -35)
     
+    ArmoryListGuildBankScrollFrame:StripTextures()
     U.SkinScrollBar(ArmoryListGuildBankScrollFrameScrollBar)
     ArmoryListGuildBankScrollFrame:Point("TOPRIGHT", -33, -96)
     ArmoryListGuildBankScrollFrame:Height(321)
@@ -104,7 +105,8 @@ local function SkinListGuildBank()
         ArmoryGuildBankFilterDropDown:Point("TOPRIGHT", ArmoryListGuildBankFrameMoneyBackgroundFrame, "BOTTOMRIGHT",  40, 0)
         
         ArmoryGuildBankNameDropDown:ClearAllPoints()
-        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -5, -56)
+        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -13, -56)
+        ArmoryGuildBankNameDropDown:Width(164)
     end)
 end
 
@@ -177,8 +179,8 @@ local function SkinIconGuildBank()
         ArmoryGuildBankFilterDropDown:Point("TOPRIGHT", 33, -35)
         
         ArmoryGuildBankNameDropDown:ClearAllPoints()
-        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -4, -3)
-        ArmoryGuildBankNameDropDown:Width(160)
+        ArmoryGuildBankNameDropDown:Point("TOPLEFT", -13, -3)
+        ArmoryGuildBankNameDropDown:Width(164)
     end)
 end
 
