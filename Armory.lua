@@ -1546,6 +1546,8 @@ local function SkinLookup()
 
     ArmoryLookupExpandButtonFrame:StripTextures()
     ArmoryLookupExpandButtonFrame:Point("TOPLEFT", 0, -60)
+	ArmoryLookupExpandAllButton:GetNormalTexture():Size(15)
+    hooksecurefunc("ArmoryLookupFrame_Update", function() U.SkinPlusMinButton(ArmoryLookupExpandAllButton) end)
 
     U.SkinButton(ArmoryLookupButton)
     ArmoryLookupButton:ClearAllPoints()
@@ -1559,9 +1561,14 @@ local function SkinLookup()
     
     ArmoryLookupLine1:Point("TOPLEFT", 8, -83)
     for i = 1, ARMORY_LOOKUP_LINES_DISPLAYED do
-        local icon = _G["ArmoryLookupLine"..i]:GetNormalTexture()
-        icon:SetTexCoord(unpack(c.TexCoords))
-        icon:SetSize(14, 14)
+        local line = _G["ArmoryLookupLine"..i]
+
+        U.SkinPlusMinButton(line, "PlusButton")
+		line.SetNormalTexture = c.noop
+
+        hooksecurefunc(line, "SetNormalTexture", function(self, texture)
+            U.SkinPlusMinButton(self, texture)
+		end)
     end
 
     ArmoryLookupScrollFrame:StripTextures()
