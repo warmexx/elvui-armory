@@ -1294,6 +1294,11 @@ local function SkinSocial()
 end
 
 local function SkinRecipeList(self, _, tradeSkillInfo)
+    if tradeSkillInfo.collapsed then
+		U.SkinPlusMinButton(self, "PlusButton")
+	else
+		U.SkinPlusMinButton(self, "MinusButton")
+	end
 	if tradeSkillInfo.hasProgressBar then
         U.SkinStatusBar(self.SubSkillRankBar)
 	end
@@ -1384,6 +1389,10 @@ local function SkinTradeSkill()
 
             Button.NameFrame:Kill()
         end
+    end)
+
+    hooksecurefunc(ArmoryTradeSkillFrame, "RefreshExpandButtonFrame", function(numTradeSkills)
+        U.SkinPlusMinButton(ArmoryTradeSkillFrame.ExpandButtonFrame.CollapseAllButton)
     end)
 end
 
