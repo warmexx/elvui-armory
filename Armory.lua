@@ -441,13 +441,13 @@ local function SkinGearSet()
     backdrop:Point("BOTTOMRIGHT", 1, -2)
     
     ArmoryGearSetFrame:HookScript("OnShow", function()
-        button.Hider:Hide();
-        button.Highlight:Hide();
+        button.Hider:Hide()
+        button.Highlight:Hide()
     end)
 
     ArmoryGearSetFrame:HookScript("OnHide", function()
-        button.Hider:Show();
-        button.Highlight:Show();
+        button.Hider:Show()
+        button.Highlight:Show()
     end)
     
     U.SkinCloseButton(ArmoryGearSetFrameClose)
@@ -545,13 +545,13 @@ local function SkinPets()
         _G["ArmoryPetStatsPaneCategory"..i]:StripTextures()
     end
     
-    ArmoryPetFramePrevPageButton:SetNormalTexture(nil);
-    ArmoryPetFramePrevPageButton:SetPushedTexture(nil);
-    ArmoryPetFramePrevPageButton:SetDisabledTexture(nil);
+    ArmoryPetFramePrevPageButton:SetNormalTexture(nil)
+    ArmoryPetFramePrevPageButton:SetPushedTexture(nil)
+    ArmoryPetFramePrevPageButton:SetDisabledTexture(nil)
     SquareButton_SetIcon(ArmoryPetFramePrevPageButton, "LEFT")
-    ArmoryPetFrameNextPageButton:SetNormalTexture(nil);
-    ArmoryPetFrameNextPageButton:SetPushedTexture(nil);
-    ArmoryPetFrameNextPageButton:SetDisabledTexture(nil);
+    ArmoryPetFrameNextPageButton:SetNormalTexture(nil)
+    ArmoryPetFrameNextPageButton:SetPushedTexture(nil)
+    ArmoryPetFrameNextPageButton:SetDisabledTexture(nil)
     SquareButton_SetIcon(ArmoryPetFrameNextPageButton, "RIGHT")
 
     for i = 1, ARMORY_NUM_PET_SLOTS do
@@ -1012,7 +1012,7 @@ local function SkinSpellLineTab(tab)
     tab:GetNormalTexture():SetTexCoord(unpack(c.TexCoords))
     tab:GetNormalTexture():SetInside()
     
-    tab.pushed = true;
+    tab.pushed = true
     CreateBackdrop(tab, "Default"):SetAllPoints()
     tab:StyleButton(true)
     tab:GetHighlightTexture().SetTexture = c.noop
@@ -1055,7 +1055,7 @@ local function SkinSpellBook()
         tab.oldtab.Enable = function(self) self.newtab:Enable() end
 
         tab:SetScript("OnClick", function(self)
-            PanelTemplates_SetTab(ArmorySpellBookFrame, self:GetID());
+            PanelTemplates_SetTab(ArmorySpellBookFrame, self:GetID())
             ArmoryToggleSpellBook(self.oldtab.bookType)
         end)
         
