@@ -698,47 +698,60 @@ local function SkinRaidInfo()
     end)    
 end
 
+local function UpdateCurrencySkins()
+    local TokenFrameContainer = ArmoryTokenFrameContainer
+	if not TokenFrameContainer.buttons then return end
+
+	local buttons = TokenFrameContainer.buttons
+	local numButtons = #buttons
+
+	for i = 1, numButtons do
+		local button = buttons[i]
+
+		if button then
+			if button.highlight then button.highlight:Kill() end
+			if button.categoryLeft then button.categoryLeft:Kill() end
+			if button.categoryRight then button.categoryRight:Kill() end
+			if button.categoryMiddle then button.categoryMiddle:Kill() end
+
+			if button.icon then
+				button.icon:SetTexCoord(unpack(c.TexCoords))
+			end
+
+			if button.expandIcon then
+				if not button.highlightTexture then
+					button.highlightTexture = button:CreateTexture(button:GetName().."HighlightTexture", "HIGHLIGHT")
+					button.highlightTexture:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
+					button.highlightTexture:SetBlendMode("ADD")
+					button.highlightTexture:SetInside(button.expandIcon)
+
+					button.expandIcon:Point("LEFT", 4, 0)
+					button.expandIcon:Size(15, 15)
+				end
+
+				if button.isHeader then
+					if button.isExpanded then
+						button.expandIcon:SetTexture(c.Media.Textures.MinusButton)
+						button.expandIcon:SetTexCoord(0,1,0,1)
+					else
+						button.expandIcon:SetTexture(c.Media.Textures.PlusButton)
+						button.expandIcon:SetTexCoord(0,1,0,1)
+					end
+
+					button.highlightTexture:Show()
+				else
+					button.highlightTexture:Hide()
+				end
+			end
+		end
+    end
+end
+
 local function SkinCurrency()
     U.SkinScrollBar(ArmoryTokenFrameContainerScrollBar)
     
-    hooksecurefunc("ArmoryTokenFrame_Update", function()
-        for i = 1, Armory:GetCurrencyListSize() do
-            local button = _G["ArmoryTokenFrameContainerButton"..i]
-            local icon = _G["ArmoryTokenFrameContainerButton"..i.."Icon"]
-            if button then
-                button.highlight:Kill()
-                button.categoryMiddle:Kill()    
-                button.categoryLeft:Kill()    
-                button.categoryRight:Kill()
-                
-                icon:SetTexCoord(unpack(c.TexCoords))
-
-                if not button.highlightTexture then
-                    button.highlightTexture = button:CreateTexture(button:GetName().."HighlightTexture", "HIGHLIGHT")
-                    button.highlightTexture:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
-                    button.highlightTexture:SetBlendMode("ADD")
-                    button.highlightTexture:SetInside(button.expandIcon)
-
-                    button.expandIcon:Point("LEFT", 4, 0)
-                    button.expandIcon:Size(15, 15)
-                end
-
-                if button.isHeader then
-                    if button.isExpanded then
-                        button.expandIcon:SetTexture(c.Media.Textures.MinusButton)
-                        button.expandIcon:SetTexCoord(0, 1, 0, 1)
-                    else
-                        button.expandIcon:SetTexture(c.Media.Textures.PlusButton)
-                        button.expandIcon:SetTexCoord(0, 1, 0, 1)
-                    end
- 
-                    button.highlightTexture:Show()
-                else
-                    button.highlightTexture:Hide()
-                end
-            end
-        end
-    end)
+    hooksecurefunc("ArmoryTokenFrame_Update", UpdateCurrencySkins)
+	hooksecurefunc(ArmoryTokenFrameContainer, "update", UpdateCurrencySkins)
 end
 
 local function SkinOther()
