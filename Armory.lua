@@ -1110,8 +1110,6 @@ local function SkinQuestLog()
 
         U.SkinPlusMinButton(questLogTitle, "PlusButton")
 		questLogTitle.SetNormalTexture = c.noop
-
-		questLogTitle:GetNormalTexture():Size(15)
 		questLogTitle:GetNormalTexture():Point("LEFT", 5, 0)
     
         hooksecurefunc(questLogTitle, "SetNormalTexture", function(self, texture) U.SkinPlusMinButton(self, texture) end)
@@ -1155,7 +1153,7 @@ end
 local function SkinQuests()
     U.SkinArmoryFrame(ArmoryQuestFrame, true)
 
-    U.SkinSearchBox(ArmoryQuestFrameEditBox)
+    U.SkinSearchBox(ArmoryQuestFrameEditBox, 150)
     ArmoryQuestFrameEditBox:ClearAllPoints()
     ArmoryQuestFrameEditBox:Point("TOPLEFT", 8, -35)
 
@@ -1405,7 +1403,7 @@ local function SkinAchievements()
 
     U.SkinSearchBox(ArmoryAchievementFrameEditBox, 150)
     ArmoryAchievementFrameEditBox:ClearAllPoints()
-    ArmoryAchievementFrameEditBox:Point("TOPLEFT", 8, -33)
+    ArmoryAchievementFrameEditBox:Point("TOPLEFT", 8, -35)
 
     ArmoryAchievementCollapseAllButton:StripTextures()
     ArmoryAchievementExpandButtonFrame:Point("TOPLEFT", 8, -49)
