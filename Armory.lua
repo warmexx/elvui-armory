@@ -1588,6 +1588,20 @@ local function SkinQTips()
                             U.SkinSliderFrame(self.slider)
                         end
                     end)
+
+                    hooksecurefunc(tooltip, "SetCell", function(self, index, column, value, provider)
+                        if self.inhook then return end
+                        self.inhook = true
+                        if provider and type(value) == "string" then
+                            if strfind(value, "MinusButton") then
+                                tooltip:SetCell(index, column, c.Media.Textures.MinusButton, provider)
+                            elseif strfind(value, "PlusButton") then
+                                tooltip:SetCell(index, column, c.Media.Textures.PlusButton, provider)
+                            end
+                        end
+                        self.inhook = false
+                    end)
+
                     break
                 end
             end
