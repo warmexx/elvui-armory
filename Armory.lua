@@ -656,6 +656,7 @@ end
 local function SkinReputation()
     U.SkinScrollBar(ArmoryReputationListScrollFrameScrollBar)
     ArmoryReputationListScrollFrame:StripTextures()
+    ArmoryReputationListScrollFrame:Point("BOTTOMRIGHT", ArmoryFrameInset, -27, 4)
     ArmoryReputationFrame:StripTextures(true)
 
     ArmoryReputationFrame:HookScript("OnShow", function()
@@ -748,6 +749,7 @@ local function UpdateCurrencySkins()
 end
 
 local function SkinCurrency()
+    ArmoryTokenFrameContainer:Point("TOPLEFT", 24, -75)
     U.SkinScrollBar(ArmoryTokenFrameContainerScrollBar)
     
     hooksecurefunc("ArmoryTokenFrame_Update", UpdateCurrencySkins)
