@@ -667,8 +667,6 @@ local function SkinReputation()
                 U.SkinStatusBar(statusbar)
                 
                 _G["ArmoryReputationBar"..i.."Background"]:SetTexture()
-                _G["ArmoryReputationBar"..i.."LeftLine"]:Kill()
-                _G["ArmoryReputationBar"..i.."BottomLine"]:Kill()
                 _G["ArmoryReputationBar"..i.."ReputationBarHighlight1"]:SetTexture()
                 _G["ArmoryReputationBar"..i.."ReputationBarHighlight2"]:SetTexture()    
                 _G["ArmoryReputationBar"..i.."ReputationBarAtWarHighlight1"]:SetTexture()
@@ -1447,8 +1445,6 @@ local function SkinAchievements()
                 U.SkinStatusBar(statusbar)
 
                 _G["ArmoryAchievementBar"..i.."Background"]:SetTexture(nil)
-                _G["ArmoryAchievementBar"..i.."LeftLine"]:Kill()
-                _G["ArmoryAchievementBar"..i.."BottomLine"]:Kill()
                 _G["ArmoryAchievementBar"..i.."AchievementBarHighlight1"]:SetTexture(nil)
                 _G["ArmoryAchievementBar"..i.."AchievementBarHighlight2"]:SetTexture(nil)    
                 _G["ArmoryAchievementBar"..i.."AchievementBarLeftTexture"]:SetTexture(nil)
@@ -1637,8 +1633,8 @@ Armory:Execute(function()
     local myVersion = Armory.version:match("^v?([%d%.]+)")
     if myVersion then
         local major, minor, rel = strsplit(".", myVersion)
-        if (major * 100 + (minor or 0) + (rel or 0) / 100) < 1102 then 
-            Armory:Print(RED_FONT_COLOR_CODE.."This skin needs Armory v11.2.0 or higher."..FONT_COLOR_CODE_CLOSE)
+        if (major * 100 + (minor or 0) + (rel or 0) / 100) < 1506 then 
+            Armory:Print(RED_FONT_COLOR_CODE.."This skin needs Armory v15.6.0 or higher."..FONT_COLOR_CODE_CLOSE)
             return
         end
     end
