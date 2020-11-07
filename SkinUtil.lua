@@ -127,11 +127,7 @@ end
 
 function U.SkinFrame(self)
     self:StripTextures(true)
-    self:SetTemplate("Transparent")
-end
-
-function U.SkinTooltip(self)
-    self:SetTemplate("Transparent", nil, true)
+    self:CreateBackdrop("Transparent")
 end
 
 function U.SkinStatusBar(self)
@@ -146,19 +142,19 @@ end
 
 function U.SkinItemButton(button, icon)
     button:StripTextures()
+    button:CreateBackdrop()
     button:StyleButton()
-    button:SetTemplate("Default", true)
 
     icon:SetInside()
     icon:SetTexCoord(unpack(c.TexCoords))
 
     hooksecurefunc(button.IconBorder, "SetVertexColor", function(self, r, g, b)
-        self:GetParent():SetBackdropBorderColor(r, g, b)
+        self:GetParent().backdrop:SetBackdropBorderColor(r, g, b)
         self:SetTexture("")
     end)
     hooksecurefunc(button.IconBorder, "Hide", function(self)
         if c.media then
-            self:GetParent():SetBackdropBorderColor(unpack(c.media.bordercolor))
+            self:GetParent().backdrop:SetBackdropBorderColor(unpack(c.media.bordercolor))
         elseif c.Medias then
             self:GetParent():SetBackdropBorderColor(unpack(c.Medias.BorderColor))
         end
@@ -167,9 +163,9 @@ end
 
 function U.ColorItemBorder(object, quality)
     if quality and quality > 1 then 
-        object:SetBackdropBorderColor(GetItemQualityColor(quality))
+        object.backdrop:SetBackdropBorderColor(GetItemQualityColor(quality))
     elseif c.media then
-        object:SetBackdropBorderColor(unpack(c.media.bordercolor))
+        object.backdrop:SetBackdropBorderColor(unpack(c.media.bordercolor))
     elseif c.Medias then
         object:SetBackdropBorderColor(unpack(c.Medias.BorderColor))
     end

@@ -28,7 +28,8 @@ local function SkinMisc()
         "ArmoryDropDownList2Backdrop"
     }
     for _, skin in ipairs(skins) do
-        _G[skin]:SetTemplate("Transparent")
+        _G[skin]:StripTextures()
+        _G[skin]:CreateBackdrop("Transparent")
     end
     
     U.SkinButton(ArmoryStaticPopupButton1)
@@ -207,29 +208,6 @@ local function SkinOptions()
     U.SkinScrollBar(_G[currencyFrame.."ScrollFrame"].ScrollBar)
 end
 
-local function SkinTooltips()
-    local tooltips = {
-        "ArmoryComparisonTooltip1",
-        "ArmoryComparisonTooltip2", 
-        "ArmoryConquestTooltip"
-    }
-   
-    local function AdjustTooltip(tt)
-        if not tt.GetItem then return end
-        local _, link = tt:GetItem()
-        local point, relativeTo, relativePoint, x, y = tt:GetPoint()
-        local xAdd = point:find("LEFT") and 2 or -2
-        tt:ClearAllPoints()
-        tt:SetPoint(point, relativeTo, relativePoint, x + xAdd, y)
-        ColorItemBorder(tt, link)
-    end
-    
-    for _, name in ipairs(tooltips) do
-        U.SkinTooltip(_G[name])
-        _G[name]:HookScript("OnShow", AdjustTooltip)
-    end
-end
-
 local function SkinMinimapButton()
     ArmoryMinimapButton:Hide()
     ArmoryMinimapButton:HookScript("OnShow", function(self) self:Hide() end)
@@ -257,6 +235,7 @@ local function SkinStatFrame(suffix)
     frame:StripTextures()
     frame:SetWidth(frame:GetWidth() + 6)
     
+    scrollBar:CreateBackdrop()
     U.SkinSliderFrame(scrollBar)
     scrollBar:SetTemplate("Default")
     scrollBar:SetScript("OnShow", function(self)
@@ -277,7 +256,7 @@ local function SkinStatDropDown(suffix)
     end
     U.SkinDropDownBox(frame, width)
     frame:Point("BOTTOMLEFT", "ArmoryAttributes"..suffix.."FrameTop", "TOPLEFT", -21, y)
-    ArmoryDropDownList1:SetTemplate("Transparent")
+    ArmoryDropDownList1:CreateBackdrop("Transparent")
     SkinStatFrame(suffix)
 end
 
@@ -377,7 +356,7 @@ local function SkinArmoryFrame()
         local button = _G["ArmoryFrameLineTab"..i]
         local icon = button:GetNormalTexture()
         button:StripTextures()
-        button:SetTemplate("Default", true)
+        button:CreateBackdrop("Default", true)
         button:StyleButton()
         icon:SetTexCoord(unpack(c.TexCoords))
         icon:SetInside()
@@ -520,7 +499,7 @@ local function SkinPaperDoll()
 
             button:SetNormalTexture(nil)
             button:StyleButton()
-            button:SetTemplate("Default", true)
+            button:CreateBackdrop("Default", true)
             button.icon:SetTexCoord(unpack(c.TexCoords))
             button.icon:SetInside()
 
@@ -559,7 +538,7 @@ local function SkinPets()
         local slot = _G["ArmoryPetFramePet"..i]
         slot:StripTextures()
         slot:StyleButton(false)
-        slot:SetTemplate("Default", true)
+        slot:CreateBackdrop("Default", true)
         icon:SetTexCoord(unpack(c.TexCoords))
         icon:SetInside()
     end
@@ -638,14 +617,12 @@ local function SkinPVP()
     
     for _, button in ipairs(ARMORY_CONQUEST_BUTTONS) do
     	button:StripTextures()
-	    button:SetTemplate()
+	    button:CreateBackdrop()
 	    button:StyleButton(nil, true)
 	    button.SelectedTexture:SetInside()
 	    button.SelectedTexture:SetTexture(1, 1, 0, 0.1)
 	end
 
-    --U.SkinTab(ArmoryPVPFrameTab1)
-    --U.SkinTab(ArmoryPVPFrameTab2)
     ArmoryPVPFrameTab1:StripTextures()
     ArmoryPVPFrameTab2:StripTextures()
 
@@ -781,9 +758,9 @@ local function SkinInventoryButton(button)
         end
     end
 
-    button.inset = CreateFrame("Button", nil, button)
+    button.inset = CreateFrame("Button", nil, button, "BackdropTemplate")
     button.inset:SetInside()
-    button.inset:SetTemplate("Default", true)
+    button.inset:CreateBackdrop("Default", true)
     button.inset:StyleButton()
     button.inset:SetScript("OnClick", function(self) 
         local button = self:GetParent()
@@ -900,7 +877,9 @@ local function SkinInventory()
         elseif button.Icon and button.Icon.IsDesaturated and button.Icon:IsDesaturated() then
             return
         else
-            ColorItemBorder(button.inset or button, link)
+            button = button.inset or button
+            if not button.backdrop then button:CreateBackdrop() end
+            ColorItemBorder(button, link)
         end
     end)
 end
@@ -946,14 +925,14 @@ local function SkinQuestLog()
 
     ArmoryEmptyQuestLogFrame:StripTextures()
     
-    ArmoryQuestLogListScrollFrame:SetTemplate()
+    ArmoryQuestLogListScrollFrame:CreateBackdrop()
     ArmoryQuestLogListScrollFrame:Width(298)
     ArmoryQuestLogListScrollFrame:Point("TOPLEFT", 19, -94)
     U.SkinScrollBar(ArmoryQuestLogListScrollFrameScrollBar)
 
     ArmoryQuestLogTitle1:Point("TOPLEFT", 19, -94)
     
-    ArmoryQuestLogDetailScrollFrame:SetTemplate()
+    ArmoryQuestLogDetailScrollFrame:CreateBackdrop()
     ArmoryQuestLogDetailScrollFrame:Width(298)
     U.SkinScrollBar(ArmoryQuestLogDetailScrollFrameScrollBar)
     if not hideParchment then
@@ -1027,7 +1006,7 @@ local function SkinQuestLog()
 					level:ClearAllPoints()
 					level:SetPoint("BOTTOM", followerReward.PortraitFrame, 0, 3)
 
-					local squareBG = CreateFrame("Frame", nil, followerReward.PortraitFrame)
+					local squareBG = CreateFrame("Frame", nil, followerReward.PortraitFrame, "BackdropTemplate")
 					squareBG:SetFrameLevel(followerReward.PortraitFrame:GetFrameLevel()-1)
 					squareBG:SetPoint("TOPLEFT", 2, -2)
 					squareBG:SetPoint("BOTTOMRIGHT", -2, 2)
@@ -1177,7 +1156,7 @@ end
 local function SkinSpellBook()
     U.SkinArmoryFrame(ArmorySpellBookFrame, true)
         
-    local pageBackdrop = CreateFrame("Frame", nil, ArmorySpellBookFrame)
+    local pageBackdrop = CreateFrame("Frame", nil, ArmorySpellBookFrame, "BackdropTemplate")
     pageBackdrop:SetTemplate("Default")
     pageBackdrop:Point("TOPLEFT", ArmorySpellBookFrame, "TOPLEFT", 2, -75)
     pageBackdrop:Point("BOTTOMRIGHT", ArmorySpellBookFrame, "BOTTOMRIGHT", -2, 2)
@@ -1361,7 +1340,7 @@ local function SkinTradeSkill()
             ResultIcon:GetNormalTexture():SetTexCoord(unpack(c.TexCoords))
             ResultIcon:GetNormalTexture():SetInside()
         end
-        ResultIcon:SetTemplate("Default")
+        ResultIcon:CreateBackdrop("Default")
 		ResultIcon.IconBorder:SetTexture(nil)
 		ResultIcon.ResultBorder:SetTexture(nil)
 
@@ -1373,7 +1352,7 @@ local function SkinTradeSkill()
             Icon:SetTexCoord(unpack(c.TexCoords))
             Icon:SetDrawLayer("OVERLAY")
             if not Icon.backdrop then
-                Icon.backdrop = CreateFrame("Frame", nil, Button)
+                Icon.backdrop = CreateFrame("Frame", nil, Button, "BackdropTemplate")
                 Icon.backdrop:SetFrameLevel(Button:GetFrameLevel() - 1)
                 Icon.backdrop:SetTemplate("Default")
                 Icon.backdrop:SetOutside(Icon)
@@ -1520,7 +1499,7 @@ local function SkinFind()
     ArmoryFindFrameButton1:Point("TOPLEFT", 3, -83)
     ArmoryFindFrameTotals:Point("BOTTOM", 0, 110)
     
-    local detailBackdrop = CreateFrame("Frame", nil, ArmoryFindFrame)
+    local detailBackdrop = CreateFrame("Frame", nil, ArmoryFindFrame, "BackdropTemplate")
     detailBackdrop:SetTemplate("Transparent")
     detailBackdrop:Point("TOPLEFT", ArmoryFindFrame, "TOPLEFT", 10, -298)
     detailBackdrop:Point("BOTTOMRIGHT", ArmoryFindFrame, "BOTTOMRIGHT", -10, 40)
@@ -1641,7 +1620,6 @@ Armory:Execute(function()
 
     SkinMisc()
     SkinOptions()
-    SkinTooltips()
     --SkinMinimapButton()
     SkinOverlay()
     SkinArmoryFrame()

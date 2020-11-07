@@ -112,7 +112,7 @@ end
 
 local function SkinIconGuildBank()
     ArmoryIconGuildBankFrame:StripTextures()
-    ArmoryIconGuildBankFrame:SetTemplate("Transparent")
+    ArmoryIconGuildBankFrame:CreateBackdrop("Transparent")
     ArmoryIconGuildBankFrameEmblemFrame:StripTextures(true) 
     ArmoryIconGuildBankTabTitle:ClearAllPoints()
     ArmoryIconGuildBankTabTitle:Point("TOP", ArmoryIconGuildBankFrame, "TOP", 0, -40)
@@ -157,7 +157,8 @@ local function SkinIconGuildBank()
         
         button:StripTextures()
         button:StyleButton(true)
-        button:SetTemplate("Default", true)
+		button:CreateBackdrop(nil, true)
+		button.backdrop:SetAllPoints()
 
         texture:SetInside()
         texture:SetTexCoord(unpack(c.TexCoords))
