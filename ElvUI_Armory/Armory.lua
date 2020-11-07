@@ -208,6 +208,18 @@ local function SkinOptions()
     U.SkinScrollBar(_G[currencyFrame.."ScrollFrame"].ScrollBar)
 end
 
+local function SkinTooltips()
+    local tooltips = {
+        "ArmoryComparisonTooltip1",
+        "ArmoryComparisonTooltip2", 
+        "ArmoryConquestTooltip"
+    }
+    
+    for _, name in ipairs(tooltips) do
+        U.SkinTooltip(_G[name])
+    end
+end
+
 local function SkinMinimapButton()
     ArmoryMinimapButton:Hide()
     ArmoryMinimapButton:HookScript("OnShow", function(self) self:Hide() end)
@@ -1636,7 +1648,8 @@ Armory:Execute(function()
 
     SkinMisc()
     SkinOptions()
-    --SkinMinimapButton()
+    SkinTooltips()
+    -- SkinMinimapButton()
     SkinOverlay()
     SkinArmoryFrame()
     SkinBuffs()

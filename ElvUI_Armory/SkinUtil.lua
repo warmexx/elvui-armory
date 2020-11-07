@@ -130,6 +130,11 @@ function U.SkinFrame(self)
     self:CreateBackdrop("Transparent")
 end
 
+function U.SkinTooltip(self)
+    if not self.backdrop then self:CreateBackdrop() end
+    self:SetTemplate("Transparent", nil, true)
+end
+
 function U.SkinStatusBar(self)
     self:StripTextures(true)
     self:CreateBackdrop()
