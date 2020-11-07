@@ -1640,8 +1640,8 @@ Armory:Execute(function()
     local myVersion = Armory.version:match("^v?([%d%.]+)")
     if myVersion then
         local major, minor, rel = strsplit(".", myVersion)
-        if (major * 100 + (minor or 0) + (rel or 0) / 100) < 1506 then 
-            Armory:Print(RED_FONT_COLOR_CODE.."This skin needs Armory v15.6.0 or higher."..FONT_COLOR_CODE_CLOSE)
+        if (major * 100 + (minor or 0) + (rel or 0) / 100) <= 1601 then 
+            Armory:Print(RED_FONT_COLOR_CODE.."This skin needs Armory 16.1.1 or higher."..FONT_COLOR_CODE_CLOSE)
             return
         end
     end
