@@ -123,6 +123,7 @@ local function SkinOptions()
         "ArmoryOptionsSummaryPanelPlayed",
         "ArmoryOptionsSummaryPanelOnline",
         "ArmoryOptionsSummaryPanelMoney",
+        "ArmoryOptionsSummaryPanelBags",
         "ArmoryOptionsSummaryPanelCurrency",
         "ArmoryOptionsSummaryPanelRaidInfo",
         "ArmoryOptionsSummaryPanelQuest",
@@ -152,7 +153,6 @@ local function SkinOptions()
         "ArmoryOptionsSummaryPanelDelaySlider",
     }
     local dropDownBoxes = {
-        "ArmoryOptionsPanelWeeklyResetDropDown",
         "ArmoryOptionsFindPanelDefaultSearchTypeDropDown",
         "ArmoryOptionsMiscPanelWarningSoundDropDown",
     }
@@ -1364,6 +1364,22 @@ local function SkinTradeSkill()
 
             Button.NameFrame:Kill()
         end
+
+        for i = 1, #ArmoryTradeSkillFrame.DetailsFrame.Contents.OptionalReagents do
+			local Button = ArmoryTradeSkillFrame.DetailsFrame.Contents.OptionalReagents[i]
+			local Icon = Button.Icon
+
+			Icon:SetTexCoord(unpack(c.TexCoords))
+			Icon:SetDrawLayer('OVERLAY')
+			if not Icon.backdrop then
+				Icon.backdrop = CreateFrame('Frame', nil, Button, 'BackdropTemplate')
+				Icon.backdrop:SetFrameLevel(Button:GetFrameLevel() - 1)
+				Icon.backdrop:SetTemplate()
+				Icon.backdrop:SetOutside(Icon)
+			end
+
+			Button.NameFrame:Kill()
+		end
     end)
 
     hooksecurefunc(ArmoryTradeSkillFrame, "RefreshExpandButtonFrame", function(numTradeSkills)
