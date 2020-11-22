@@ -1,6 +1,6 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: |cff1784d1ElvUI|r Armory
-## Version: 2.9
+## Version: 2.10
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
 ## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
