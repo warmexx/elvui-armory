@@ -166,7 +166,7 @@ function U.SkinItemButton(button, icon)
 end
 
 function U.ColorItemBorder(object, quality)
-    if quality and quality > 1 then 
+    if quality and quality > 1 then
         object:SetBackdropBorderColor(GetItemQualityColor(quality))
     elseif c.media then
         object:SetBackdropBorderColor(unpack(c.media.bordercolor))
@@ -194,6 +194,7 @@ function U.SkinArmoryFrame(frame, isSideFrame)
     U.SkinFrame(frame)
     frame:SetSize(338, 424)
     closeButton:Point("TOPRIGHT", frame, "TOPRIGHT", 3, 3)
+    title:SetTextColor(1, 1, 1)
     title:ClearAllPoints()
     title:Point("TOP", frame, "TOP", 0, -3)
     if isSideFrame then
