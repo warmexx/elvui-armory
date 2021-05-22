@@ -33,7 +33,7 @@ local function SkinMisc()
     for _, skin in ipairs(skins) do
         _G[skin]:SetTemplate("Transparent")
     end
-    
+
     U.SkinButton(ArmoryStaticPopupButton1)
     U.SkinButton(ArmoryStaticPopupButton2)
 end
@@ -155,7 +155,7 @@ local function SkinOptions()
     local editBoxes = {
         "ArmoryOptionsSharePanelChannelName",
     }
-    
+
     for _, name in ipairs(checkBoxes) do
 		U.SkinCheckBox(_G[name])
     end
@@ -175,7 +175,7 @@ local function SkinOptions()
     for _, name in ipairs(buttons) do
         U.SkinButton(_G[name])
     end
-    
+
     for _, name in ipairs(editBoxes) do
         U.SkinEditBox(_G[name])
         _G[name]:Height(_G[name]:GetHeight() - 5)
@@ -185,9 +185,9 @@ end
 local function SkinTooltips()
     local tooltips = {
         ArmoryComparisonTooltip1,
-        ArmoryComparisonTooltip2, 
+        ArmoryComparisonTooltip2,
     }
-   
+
     local function AdjustTooltip(tt)
         local _, link = tt:GetItem()
         local point, relativeTo, relativePoint, x, y = tt:GetPoint()
@@ -196,7 +196,7 @@ local function SkinTooltips()
         tt:SetPoint(point, relativeTo, relativePoint, x + xAdd, y)
         ColorItemBorder(tt, link)
     end
-    
+
     for _, tt in ipairs(tooltips) do
         U.SkinTooltip(tt)
         tt:HookScript("OnShow", AdjustTooltip)
@@ -208,13 +208,13 @@ local function SkinMinimapButton()
     ArmoryMinimapButton:HookScript("OnShow", function(self) self:Hide() end)
 
     local disabled = function() return true end
-    
+
     ArmoryOptionsMinimapPanelMinimapButton.disabledFunc = disabled
     ArmoryOptionsMinimapPanelGlobalMinimapButton.disabledFunc = disabled
     ArmoryOptionsMinimapPanelAngleSlider.disabledFunc = disabled
     ArmoryOptionsMinimapPanelRadiusSlider.disabledFunc = disabled
     ArmoryOptionsMinimapPanelGlobalPositionButton.disabledFunc = disabled
-    
+
     ArmoryOptionsPanel_Refresh(ArmoryOptionsMinimapPanel)
 end
 
@@ -327,12 +327,12 @@ local function SkinArmoryFrame()
     ArmoryLevelText:ClearAllPoints()
     ArmoryFrame.TitleText:Point("TOP", ArmoryFrame, "TOP", -6, -4)
     ArmoryLevelText:Point("TOP", ArmoryFrame.TitleText, "BOTTOM", 0, -6)
- 
+
     -- Bottom tabs
     for i = 1, 5 do
         U.SkinTab(_G["ArmoryFrameTab"..i])
     end
-    
+
     -- Side tabs
     for i = 1, ARMORY_MAX_LINE_TABS do
         local button = _G["ArmoryFrameLineTab"..i]
@@ -342,7 +342,7 @@ local function SkinArmoryFrame()
         button:StyleButton()
         icon:SetTexCoord(unpack(c.TexCoords))
         icon:SetInside()
-        
+
         if i == 1 then
             button:Point("TOPLEFT", ArmoryFrame, "TOPRIGHT", 2, -45)
         else
@@ -352,13 +352,13 @@ local function SkinArmoryFrame()
         end
         CreateBackdrop(button)
     end
-    
+
     -- Mail
     ArmoryMailIcon:SetTexCoord(unpack(c.TexCoords))
     ArmoryMailIcon:SetInside()
     CreateBackdrop(ArmoryMailFrame):SetOutside(ArmoryMailIcon)
     ArmoryMailFrame:Point("TOPLEFT", 28, 24)
-    
+
     -- Resting
     ArmoryRestIcon:SetTexture("Interface\\CharacterFrame\\UI-StateIcon")
     ArmoryRestIcon:ClearAllPoints()
@@ -436,16 +436,16 @@ local function SkinPaperDoll()
             i = i + 1
         end
     end)
-    
+
     SkinPaperDollInset()
 end
 
 local function SkinPets()
     ArmoryPetFrame:StripTextures()
-    
+
     ArmoryPetFrame.TitleText:Kill()
     ArmoryPetFrame.TitleText:Point("LEFT", 20)
-    
+
     ArmoryPetAttributesFrame:StripTextures()
     SkinResistances("ArmoryPetMagicResFrame")
 
@@ -473,7 +473,7 @@ local function SkinTalents()
 
 	U.SkinScrollBar(ArmoryTalentFrameScrollFrameScrollBar)
     ArmoryTalentFrameScrollFrameScrollBar:Point("TOPLEFT", ArmoryTalentFrameScrollFrame, "TOPRIGHT", 10, -16)
-    
+
 	for i = 1, ARMORY_MAX_NUM_TALENTS do
 		local talent = _G["ArmoryTalentFrameTalent"..i]
 		local icon = _G["ArmoryTalentFrameTalent"..i.."IconTexture"]
@@ -594,12 +594,12 @@ local function SkinSkills()
 
 		label:GetNormalTexture():Size(14)
 		label:SetHighlightTexture(nil)
-        
+
         if i == 1 then
             label:Point("LEFT", ArmorySkillFrame, "TOPLEFT", 20, -87)
         end
 	end
- 
+
 	hooksecurefunc("ArmorySkillFrame_SetStatusBar", function(statusBarID) U.SkinPlusMinButton(_G["ArmorySkillTypeLabel"..statusBarID]) end)
 
     ArmorySkillListScrollFrame:StripTextures()
@@ -620,7 +620,7 @@ end
 local function SetIconTexture(icon, ...)
     local arg1 = ...
     if type(arg1) == "string" and arg1 == "Interface\\Buttons\\UI-EmptySlot-Disabled" then
-        icon:SetTexture(nil)        
+        icon:SetTexture(nil)
     else
         icon:SetTexture(...)
         icon:SetTexCoord(unpack(c.TexCoords))
@@ -641,21 +641,21 @@ local function SkinInventoryButton(button)
     button.inset:SetInside()
     button.inset:SetTemplate("Default", true)
     button.inset:StyleButton()
-    button.inset:SetScript("OnClick", function(self) 
+    button.inset:SetScript("OnClick", function(self)
         local button = self:GetParent()
-        button:GetScript("OnClick")(button) 
+        button:GetScript("OnClick")(button)
     end)
-    button.inset:SetScript("OnEnter", function(self) 
+    button.inset:SetScript("OnEnter", function(self)
         local button = self:GetParent()
         self.hover:Show()
-        button:GetScript("OnEnter")(button) 
+        button:GetScript("OnEnter")(button)
     end)
-    button.inset:SetScript("OnLeave", function(self) 
+    button.inset:SetScript("OnLeave", function(self)
         local button = self:GetParent()
-        self.hover:Hide() 
-        button:GetScript("OnLeave")(button) 
+        self.hover:Hide()
+        button:GetScript("OnLeave")(button)
     end)
-    
+
     button.inset.icon = button.inset:CreateTexture(nil, "BORDER")
     button.inset.icon:SetInside()
     SetIconTexture(button.inset.icon, button.icon:GetTexture())
@@ -671,7 +671,7 @@ local function SkinInventoryButton(button)
     end
     button.searchOverlay:SetOutside(button.inset.icon)
     button.searchOverlay:SetParent(button.inset)
-    
+
     if button.link then
         ColorItemBorder(button.inset, button.link)
     end
@@ -688,14 +688,14 @@ local function SkinInventory()
     ArmoryInventoryFrameEditBox:ClearAllPoints()
     ArmoryInventoryFrameEditBox:Point("TOPLEFT", 8, -35)
     U.SkinSearchBox(ArmoryInventoryFrameEditBox, 150)
-    
+
     ArmoryInventoryFilterDropDown:ClearAllPoints()
     ArmoryInventoryFilterDropDown:Point("TOPRIGHT", -3, -60)
     ArmoryInventoryFilterDropDownText:ClearAllPoints()
     ArmoryInventoryFilterDropDownText:Point("RIGHT", ArmoryInventoryFilterDropDown, "RIGHT", 0, 0)
     ArmoryDropDownMenu_JustifyText(ArmoryInventoryFilterDropDown, "RIGHT")
     hooksecurefunc("ArmoryItemFilter_InitializeDropDown", function(self) ArmoryDropDownMenu_JustifyText(self, "RIGHT") end)
-    
+
     ArmoryInventoryExpandButtonFrame:StripTextures()
     ArmoryInventoryExpandButtonFrame:Point("TOPLEFT", 0, -60)
 	ArmoryInventoryCollapseAllButton:GetNormalTexture():Size(15)
@@ -706,7 +706,7 @@ local function SkinInventory()
     ArmoryInventoryFrameTab1:Point("TOPLEFT", ArmoryInventoryFrame, "BOTTOMLEFT", 19, 2)
     U.SkinTab(ArmoryInventoryFrameTab1)
     U.SkinTab(ArmoryInventoryFrameTab2)
-    
+
     ArmoryInventoryIconViewFrame:Point("TOPRIGHT", -33, -86)
     ArmoryInventoryIconViewFrame:Width(ArmoryInventoryIconViewFrame:GetWidth() + 1)
     ArmoryInventoryIconViewFrame:StripTextures()
@@ -729,7 +729,7 @@ local function SkinInventory()
         end
 
         U.SkinPlusMinButton(label)
-    end)    
+    end)
 
     hooksecurefunc("ArmoryInventoryIconViewFrame_Update", function() U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton) end)
 
@@ -740,7 +740,7 @@ local function SkinInventory()
     U.SkinScrollBar(ArmoryInventoryListViewScrollFrameScrollBar)
     U.SkinCheckBox(ArmoryInventoryListViewFrameSearchAllCheckButton)
     ArmoryInventoryListViewFrameSearchAllCheckButton:Point("TOPLEFT", ArmoryInventoryFrame, "TOPLEFT", 2, -2)
- 
+
     hooksecurefunc("ArmoryInventoryListViewFrame_Update", function()
         for i = 1, ARMORY_INVENTORY_LINES_DISPLAYED do
             local button = _G["ArmoryInventoryLine"..i]
@@ -753,7 +753,7 @@ local function SkinInventory()
         end
         U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton)
 	end)
-   
+
     hooksecurefunc(Armory, "SetItemLink", function(self, button, link)
         if button.searchOverlay and button.searchOverlay:IsVisible() then
             return
@@ -789,12 +789,12 @@ local function SkinQuests()
     ArmoryQuestLogTitle1:Point("TOPLEFT", 5, -58)
 
     ArmoryEmptyQuestLogFrame:StripTextures()
-    
+
     ArmoryQuestLogListScrollFrame:SetTemplate()
     ArmoryQuestLogListScrollFrame:Width(298)
     ArmoryQuestLogListScrollFrame:Point("TOPLEFT", 8, -56)
     U.SkinScrollBar(ArmoryQuestLogListScrollFrameScrollBar)
-    
+
     ArmoryQuestLogDetailScrollFrame:SetTemplate()
     ArmoryQuestLogDetailScrollFrame:Width(298)
     U.SkinScrollBar(ArmoryQuestLogDetailScrollFrameScrollBar)
@@ -806,7 +806,7 @@ local function SkinQuests()
 
     ArmoryQuestLogCount:ClearAllPoints()
     ArmoryQuestLogCount:Point("BOTTOMRIGHT", ArmoryQuestLogListScrollFrame, "TOPRIGHT", 330, 0)
-    
+
     hooksecurefunc("ArmoryQuestFrameItems_Update", function()
         local headers = {
             ArmoryQuestLogQuestTitle,
@@ -818,7 +818,7 @@ local function SkinQuests()
         for _, header in ipairs(headers) do
             header:SetTextColor(1, 0.80, 0.10)
         end
-        
+
         local texts = {
             ArmoryQuestLogObjectivesText,
             ArmoryQuestLogSuggestedGroupNum,
@@ -833,7 +833,7 @@ local function SkinQuests()
         for _, text in ipairs(texts) do
             text:SetTextColor(1, 1, 1)
         end
-        
+
         local requiredMoney = Armory:GetQuestLogRequiredMoney()
         if requiredMoney > 0 then
 			if requiredMoney > Armory:GetMoney() then
@@ -899,28 +899,28 @@ local function SkinSpellLineTab(tab)
     tab:StripTextures()
     tab:GetNormalTexture():SetTexCoord(unpack(c.TexCoords))
     tab:GetNormalTexture():SetInside()
-    
+
     tab.pushed = true;
     CreateBackdrop(tab, "Default"):SetAllPoints()
     tab:StyleButton(true)
     tab:GetHighlightTexture().SetTexture = c.noop
     tab:GetCheckedTexture().SetTexture = c.noop
-    
+
     local point, relativeTo, relativePoint, x, y = tab:GetPoint()
-    tab:Point(point, relativeTo, relativePoint, 1, y)     
+    tab:Point(point, relativeTo, relativePoint, 1, y)
 end
 
 local function SkinSpellBook()
     U.SkinArmoryFrame(ArmorySpellBookFrame, true)
 
-    -- Replace tabs by standard ones    
+    -- Replace tabs by standard ones
     PanelTemplates_SetNumTabs(ArmorySpellBookFrame, 3)
     for i = 1, 3 do
         local tab = CreateFrame("Button", "ArmorySpellBookFrameTab"..i, ArmorySpellBookFrame, "CharacterFrameTabButtonTemplate")
         tab:SetID(i)
         tab:StripTextures()
         U.SkinTab(tab)
-        
+
         tab.oldtab = _G["ArmorySpellBookFrameTabButton"..i]
         tab.oldtab.newtab = tab
         tab.oldtab:Kill()
@@ -934,14 +934,15 @@ local function SkinSpellBook()
             PanelTemplates_SetTab(ArmorySpellBookFrame, self:GetID());
             ArmoryToggleSpellBook(self.oldtab.bookType)
         end)
-        
+
         if i == 1 then
             tab:SetPoint("TOPLEFT", ArmorySpellBookFrame, "BOTTOMLEFT", 19, 2)
         else
             tab:SetPoint("LEFT", "ArmorySpellBookFrameTab"..(i-1), "RIGHT", -16, 0)
         end
      end
-    
+
+    ArmorySpellBookPageText:SetTextColor(1, 1, 1)
     ArmorySpellBookPageText:Point("BOTTOM", 0, 12)
     ArmorySpellBookPageText:SetParent(ArmorySpellBookSpellIconsFrame)
 
@@ -952,11 +953,11 @@ local function SkinSpellBook()
     ArmorySpellBookNextPageButton:Size(24)
     ArmorySpellBookNextPageButton:Point("TOPLEFT", ArmorySpellBookPrevPageButton, "TOPLEFT", 25, 0)
     U.SkinNextPrevButton(ArmorySpellBookNextPageButton)
-    
+
     for i = 1, MAX_SKILLLINE_TABS do
         SkinSpellLineTab(_G["ArmorySpellBookSkillLineTab"..i])
     end
-    
+
     ArmorySpellButton1:Point("TOPLEFT", 18, -18)
     for i = 1, SPELLS_PER_PAGE do
         local button = _G["ArmorySpellButton"..i]
@@ -1006,16 +1007,16 @@ end
 
 local function SkinSocial()
     U.SkinArmoryFrame(ArmorySocialFrame, true)
-    
+
     for i = 1, ARMORY_SOCIAL_TABS do
         U.SkinTab(_G["ArmorySocialFrameTab"..i])
     end
-    
+
     local frames = {
         "ArmoryFriendsListScrollFrame",
         "ArmoryIgnoreListScrollFrame"
     }
-    
+
     for i, frame in ipairs(frames) do
         _G[frame]:Height(342)
         _G[frame]:Point("TOPRIGHT", -33, -75)
@@ -1027,7 +1028,7 @@ local function SkinSocial()
         ArmoryFriendsListButton = ARMORY_FRIENDS_TO_DISPLAY,
         ArmoryIgnoreListButton = ARMORY_IGNORES_TO_DISPLAY
     }
-    
+
     for button, num in pairs(buttons) do
         for i = 1, num do
             _G[button..i]:SetHighlightTexture(nil)
@@ -1049,7 +1050,7 @@ end
 
 local function SkinTradeSkill()
     U.SkinArmoryFrame(ArmoryTradeSkillFrame, true)
-    
+
     ArmoryTradeSkillFrame:StripTextures(true)
     ArmoryTradeSkillFrame:CreateBackdrop("Transparent")
 
@@ -1072,12 +1073,12 @@ local function SkinTradeSkill()
     ArmoryTradeSkillFrame.FilterButton:SetPoint("TOPRIGHT", ArmoryTradeSkillFrame.RankFrame, "BOTTOMRIGHT", 0, -12)
 
     U.SkinScrollBar(ArmoryTradeSkillFrame.RecipeList.ScrollBar)
-    U.SkinScrollBar(ArmoryTradeSkillFrame.DetailsFrame.ScrollBar)     
+    U.SkinScrollBar(ArmoryTradeSkillFrame.DetailsFrame.ScrollBar)
 
     U.SkinSearchBox(ArmoryTradeSkillFrameEditBox)
     ArmoryTradeSkillFrameEditBox:ClearAllPoints()
     ArmoryTradeSkillFrameEditBox:Point("TOPLEFT", 8, -30)
-    
+
     hooksecurefunc(ArmoryTradeSkillFrame.RecipeList, "UpdateLayout", function()
         local point, relativeTo, relativePoint, x, y
 
@@ -1088,10 +1089,10 @@ local function SkinTradeSkill()
         ArmoryTradeSkillFrame.RecipeList.FilterBar:ClearAllPoints()
         ArmoryTradeSkillFrame.RecipeList.FilterBar:Point(point, relativeTo, relativePoint, x - 11, y + 10)
 
-        point, relativeTo, relativePoint, x, y = ArmoryTradeSkillFrame.RecipeList.ScrollBar:GetPoint() 
+        point, relativeTo, relativePoint, x, y = ArmoryTradeSkillFrame.RecipeList.ScrollBar:GetPoint()
         ArmoryTradeSkillFrame.RecipeList.ScrollBar:Point(point, relativeTo, relativePoint, 2, y)
     end)
- 
+
     hooksecurefunc(ArmoryTradeSkillFrame.RecipeList, "Refresh", function()
 		for _, tradeSkillButton in ipairs(ArmoryTradeSkillFrame.RecipeList.buttons) do
 			if not tradeSkillButton.headerIsHooked then
@@ -1100,7 +1101,7 @@ local function SkinTradeSkill()
             end
 		end
 	end)
-   
+
     hooksecurefunc(ArmoryTradeSkillFrame.DetailsFrame, "RefreshDisplay", function()
         local ResultIcon = ArmoryTradeSkillFrame.DetailsFrame.Contents.ResultIcon
         ResultIcon:StyleButton()
@@ -1144,11 +1145,11 @@ end
 
 local function SkinFind()
     U.SkinArmoryFrame(ArmoryFindFrame)
-    
+
     U.SkinEditBox(ArmoryFindFrameEditBox)
     ArmoryFindFrameEditBox:Height(ArmoryFindFrameEditBox:GetHeight() - 3)
     ArmoryFindFrameEditBox:Point("TOPLEFT", 8, -33)
-    
+
     U.SkinDropDownBox(ArmoryFindTypeDropDown)
     ArmoryFindTypeDropDown:ClearAllPoints()
     ArmoryFindTypeDropDown:Point("TOPRIGHT", ArmoryFindFrame, "TOPRIGHT", -3, -29)
@@ -1157,7 +1158,7 @@ local function SkinFind()
     U.SkinScrollBar(ArmoryFindFrameScrollFrameScrollBar)
     ArmoryFindFrameScrollFrame:Point("TOPRIGHT", -33, -84)
     ArmoryFindFrameScrollFrame:Height(206)
-  
+
     ArmoryFindFrameColumnHeader1:Point("TOPLEFT", 6, -58)
     WhoFrameColumn_SetWidth(ArmoryFindFrameColumnHeader2, 84)
     for i = 1, 3 do
@@ -1170,7 +1171,7 @@ local function SkinFind()
 
     ArmoryFindFrameButton1:Point("TOPLEFT", 3, -83)
     ArmoryFindFrameTotals:Point("BOTTOM", 0, 110)
-    
+
     local detailBackdrop = CreateFrame("Frame", nil, ArmoryFindFrame)
     detailBackdrop:SetTemplate("Transparent")
     detailBackdrop:Point("TOPLEFT", ArmoryFindFrame, "TOPLEFT", 10, -298)
@@ -1179,7 +1180,7 @@ local function SkinFind()
 
     ArmoryFindFrameDetailWho:ClearAllPoints()
     ArmoryFindFrameDetailWho:Point("TOPLEFT", detailBackdrop, "TOPLEFT", 6, -30)
-                
+
     U.SkinButton(ArmoryFindButton)
     ArmoryFindButton:Point("BOTTOMLEFT", 15, 8)
     ArmoryFindButton:Width(ArmoryFindButton:GetWidth() - 8)
@@ -1210,7 +1211,7 @@ local function SkinLookup()
     U.SkinDropDownBox(ArmoryLookupQuestDropDown)
     ArmoryLookupQuestDropDown:ClearAllPoints()
     ArmoryLookupQuestDropDown:Point("TOPRIGHT", ArmoryLookupTypeDropDown, "BOTTOMRIGHT", 0, 8)
-    
+
     U.SkinCheckBox(ArmoryLookupFrameSearchExactCheckButton)
     ArmoryLookupFrameSearchExactCheckButton:ClearAllPoints()
     ArmoryLookupFrameSearchExactCheckButton:Point("RIGHT", ArmoryLookupFrameEditBox, "BOTTOMRIGHT", -20, -20)
@@ -1227,9 +1228,9 @@ local function SkinLookup()
     U.SkinDropDownBox(ArmoryLookupChannelDropDown, 130)
     ArmoryLookupChannelDropDown:ClearAllPoints()
     ArmoryLookupChannelDropDown:Point("RIGHT", ArmoryLookupButton, "LEFT", 0, -3)
-    
+
     ArmoryLookupFrameTargetText:Point("BOTTOMLEFT", 8, 15)
-    
+
     ArmoryLookupLine1:Point("TOPLEFT", 8, -83)
     for i = 1, ARMORY_LOOKUP_LINES_DISPLAYED do
         local line = _G["ArmoryLookupLine"..i]
