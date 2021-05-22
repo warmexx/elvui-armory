@@ -1,6 +1,6 @@
-## Interface: 11305
-## Title: |cff1784d1ElvUI|r Armory
-## Version: 1.1
+## Interface: 11307
+## Title: |cff1784d1ElvUI|r Armory Classic
+## Version: 1.2
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
 ## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
