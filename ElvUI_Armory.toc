@@ -1,11 +1,25 @@
 ## Interface: 90005
+#@version-retail@
 ## Title: |cff1784d1ElvUI|r Armory
-## Version: 2.11
+#@end-version-retail@
+## Interface-Classic: 11307
+#@version-classic@
+## Title: |cff1784d1ElvUI Classic|r Armory
+#@end-version-classic@
+## Interface-BCC: 20501
+#@version-bcc@
+## Title: |cff1784d1ElvUI TBC|r Armory
+#@end-version-bcc@
+## Version: @project-version@
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
+## X-Date: @project-date-iso@
 ## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
-## X-Website: http://www.wow-neighbours.com/
+## X-Website: https://github.com/warmexx/elvui-armory
+## X-Curse-Project-ID: 47901
 
 SkinUtil.lua
 Armory.lua
+#@version-retail@
 ArmoryGuildBank.lua
+#@end-version-retail@
