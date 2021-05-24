@@ -17,6 +17,8 @@
 ## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
 ## X-Website: https://github.com/warmexx/elvui-armory
 ## X-Curse-Project-ID: 47901
+## X-WoWI-ID: 26034
+## X-Wago-ID: pkNMbR6z
 
 SkinUtil.lua
 Armory.lua
