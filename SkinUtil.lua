@@ -3,6 +3,10 @@ if not (IsAddOnLoaded("ElvUI") or IsAddOnLoaded("Tukui")) then return end
 local U = select(2, ...)
 local s, c
 
+U.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+U.IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+U.IsBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+
 if ElvUI then
     local E, L, V, P, G, DF = unpack(ElvUI)
     local S = E:GetModule("Skins")
@@ -62,7 +66,7 @@ function U.SkinNextPrevButton(self, horizonal)
 end
 
 function U.SkinPlusMinButton(self, texture)
-    local tex = self:GetNormalTexture()
+    local tex = self.GetNormalTexture and self:GetNormalTexture() or self
     if not texture then
         texture = tex:GetTexture()
     end
@@ -127,10 +131,15 @@ end
 
 function U.SkinFrame(self)
     self:StripTextures(true)
-    self:SetTemplate("Transparent")
+    if U.IsRetail then
+        self:CreateBackdrop("Transparent")
+    else
+        self:SetTemplate("Transparent")
+    end
 end
 
 function U.SkinTooltip(self)
+    if U.IsRetail and not self.backdrop then self:CreateBackdrop() end
     self:SetTemplate("Transparent", nil, true)
 end
 
@@ -138,40 +147,48 @@ function U.SkinStatusBar(self)
     self:StripTextures(true)
     self:CreateBackdrop()
     if c.media then
-		self:SetStatusBarTexture(c.media.normTex)
-	elseif c.Medias then
-		self:SetStatusBarTexture(c.Medias.Normal)
-	end
+        self:SetStatusBarTexture(c.media.normTex)
+    elseif c.Medias then
+        self:SetStatusBarTexture(c.Medias.Normal)
+    end
 end
 
 function U.SkinItemButton(button, icon)
     button:StripTextures()
     button:StyleButton()
-    button:SetTemplate("Default", true)
+    if U.IsRetail then
+        button:CreateBackdrop()
+    else
+        button:SetTemplate("Default", true)
+    end
 
     icon:SetInside()
     icon:SetTexCoord(unpack(c.TexCoords))
 
     hooksecurefunc(button.IconBorder, "SetVertexColor", function(self, r, g, b)
-        self:GetParent():SetBackdropBorderColor(r, g, b)
+        local backdrop = U.IsRetail and self:GetParent().backdrop or self:GetParent()
+        backdrop:SetBackdropBorderColor(r, g, b)
         self:SetTexture("")
     end)
     hooksecurefunc(button.IconBorder, "Hide", function(self)
+        local backdrop = U.IsRetail and self:GetParent().backdrop or self:GetParent()
         if c.media then
-            self:GetParent():SetBackdropBorderColor(unpack(c.media.bordercolor))
+            backdrop:SetBackdropBorderColor(unpack(c.media.bordercolor))
         elseif c.Medias then
-            self:GetParent():SetBackdropBorderColor(unpack(c.Medias.BorderColor))
+            backdrop:SetBackdropBorderColor(unpack(c.Medias.BorderColor))
         end
     end)
 end
 
 function U.ColorItemBorder(object, quality)
+    local backdrop = U.IsRetail and object.backdrop or object
+    if not backdrop.SetBackdropBorderColor then return end
     if quality and quality > 1 then
-        object:SetBackdropBorderColor(GetItemQualityColor(quality))
+        backdrop:SetBackdropBorderColor(GetItemQualityColor(quality))
     elseif c.media then
-        object:SetBackdropBorderColor(unpack(c.media.bordercolor))
+        backdrop:SetBackdropBorderColor(unpack(c.media.bordercolor))
     elseif c.Medias then
-        object:SetBackdropBorderColor(unpack(c.Medias.BorderColor))
+        backdrop:SetBackdropBorderColor(unpack(c.Medias.BorderColor))
     end
 end
 
@@ -199,5 +216,11 @@ function U.SkinArmoryFrame(frame, isSideFrame)
     title:Point("TOP", frame, "TOP", 0, -3)
     if isSideFrame then
         frame:Point("TOPLEFT", ArmoryFrame, "TOPRIGHT", 45, 0)
+    end
+end
+
+function U.HandleButtonHighlight(button, r, g, b)
+    if ElvUI then
+        s:HandleButtonHighlight(button, r, g, b)
     end
 end
