@@ -22,6 +22,6 @@
 
 SkinUtil.lua
 Armory.lua
-#@version-retail@
+#@non-version-classic@
 ArmoryGuildBank.lua
-#@end-version-retail@
+#@end-non-version-classic@

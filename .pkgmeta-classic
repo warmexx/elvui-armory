@@ -1,2 +1,4 @@
 required-dependencies:
  - armory-classic
+ignore:
+ - ArmoryGuildBank.lua
