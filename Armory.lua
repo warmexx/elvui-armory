@@ -2139,12 +2139,14 @@ local function SkinQTips()
         if name:sub(1, 6) == "Armory" then
             for key, tooltip in Armory.qtip:IterateTooltips() do
                 if key == name then
-                    tooltip:SetScript("OnShow", function(self)
-                        self:SetTemplate("Transparent")
-                        if self.slider then
-                            U.SkinSliderFrame(self.slider)
-                        end
-                    end)
+                    if not U.IsClassic then
+                        tooltip:SetScript("OnShow", function(self)
+                            self:SetTemplate("Transparent")
+                            if self.slider then
+                                U.SkinSliderFrame(self.slider)
+                            end
+                        end)
+                    end
                     hooksecurefunc(tooltip, "SetCell", function(self, index, column, value, provider)
                         if self.inhook then return end
                         self.inhook = true
