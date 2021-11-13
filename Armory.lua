@@ -1173,6 +1173,8 @@ local function SkinInventory()
     ArmoryInventoryIconViewFrameLayoutCheckButton:Point("TOPLEFT", ArmoryInventoryFrame, "TOPLEFT", 2, -2)
 
     hooksecurefunc("ArmoryInventoryIconViewFrame_ShowContainer", function(containerFrame)
+        containerFrame:Hide()
+
         local containerName = containerFrame:GetName()
         local label = _G[containerName.."Label"]
         local buttonBaseName = containerName.."Item"
@@ -1187,6 +1189,8 @@ local function SkinInventory()
         end
 
         U.SkinPlusMinButton(label)
+
+        containerFrame:Show()
     end)
 
     hooksecurefunc("ArmoryInventoryIconViewFrame_Update", function() U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton) end)
