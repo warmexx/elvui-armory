@@ -71,6 +71,16 @@ function U.SkinPlusMinButton(self, texture)
         texture = tex:GetTexture()
     end
 
+    if type(texture) ~= "string" then
+        if texture == 130821 then
+            texture = "MinusButton"
+        elseif texture == 130838 then
+            texture = "PlusButton"
+        else
+            return
+        end
+    end
+
     tex:Size(15)
     tex:SetTexCoord(0, 1, 0, 1)
 
