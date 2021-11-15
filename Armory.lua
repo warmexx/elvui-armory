@@ -165,7 +165,6 @@ local function SkinOptions()
     local sliders = {
         "ArmoryOptionsPanelScaleSlider",
         "ArmoryOptionsMinimapPanelAngleSlider",
-        "ArmoryOptionsMinimapPanelRadiusSlider",
         "ArmoryOptionsExpirationPanelExpDaysSlider",
         "ArmoryOptionsSummaryPanelDelaySlider",
     }
