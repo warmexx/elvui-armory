@@ -1,12 +1,12 @@
-## Interface: 90105
+## Interface: 90200
 #@version-retail@
 ## Title: |cff1784d1ElvUI|r Armory
 #@end-version-retail@
-## Interface-Classic: 11401
+## Interface-Classic: 11402
 #@version-classic@
 ## Title: |cff1784d1ElvUI Classic|r Armory
 #@end-version-classic@
-## Interface-BCC: 20502
+## Interface-BCC: 20504
 #@version-bcc@
 ## Title: |cff1784d1ElvUI TBC|r Armory
 #@end-version-bcc@
