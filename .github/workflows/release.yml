@@ -20,16 +20,21 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Package Retail
-        uses: BigWigsMods/packager@v1.0.1
+        uses: BigWigsMods/packager@v2
         with:
           args: -g retail -m .pkgmeta
 
       - name: Package Classic
-        uses: BigWigsMods/packager@v1.0.1
+        uses: BigWigsMods/packager@v2
         with:
           args: -g classic -m .pkgmeta-classic
 
       - name: Package BCC
-        uses: BigWigsMods/packager@v1.0.1
+        uses: BigWigsMods/packager@v2
         with:
           args: -g bcc -m .pkgmeta-bcc
+
+      - name: Package WOTLKC
+        uses: BigWigsMods/packager@v2
+        with:
+          args: -g wrath -m .pkgmeta-wrath
