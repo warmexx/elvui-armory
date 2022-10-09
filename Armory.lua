@@ -134,17 +134,20 @@ local function SkinOptions()
         "ArmoryOptionsMiscPanelExtendedTradeSkills",
         "ArmoryOptionsMiscPanelSystemWarnings",
     }
-    if U.IsRetail then
-        table.insert(checkBoxes, "ArmoryOptionsModulePanelCurrency")
+    if U.IsRetail or U.IsWrath then
         table.insert(checkBoxes, "ArmoryOptionsModulePanelAchievements")
         table.insert(checkBoxes, "ArmoryOptionsModulePanelStatistics")
+
+        table.insert(checkBoxes, "ArmoryOptionsTooltipPanelShowGems")
+    end
+    if U.IsRetail then
+        table.insert(checkBoxes, "ArmoryOptionsModulePanelCurrency")
         table.insert(checkBoxes, "ArmoryOptionsModulePanelArtifacts")
 
         table.insert(checkBoxes, "ArmoryOptionsSharePanelShareGuild")
 
         table.insert(checkBoxes, "ArmoryOptionsTooltipPanelShowSecondarySkillRank")
         table.insert(checkBoxes, "ArmoryOptionsTooltipPanelShowGearSets")
-        table.insert(checkBoxes, "ArmoryOptionsTooltipPanelShowGems")
 
         table.insert(checkBoxes, "ArmoryOptionsSummaryPanelItemLevel")
         table.insert(checkBoxes, "ArmoryOptionsSummaryPanelBags")
@@ -183,11 +186,13 @@ local function SkinOptions()
         "ArmoryOptionsTooltipPanelShowCanLearn",
         "ArmoryOptionsTooltipPanelShowCrafters",
     }
+    if U.IsRetail or U.IsWrath then
+        table.insert(swatches, "ArmoryOptionsTooltipPanelShowAchievements")
+        table.insert(swatches, "ArmoryOptionsTooltipPanelAchievementProgressColor")
+    end
     if U.IsRetail then
         table.insert(swatches, "ArmoryOptionsTooltipPanelShowSkillRank")
         table.insert(swatches, "ArmoryOptionsTooltipPanelShowQuestAlts")
-        table.insert(swatches, "ArmoryOptionsTooltipPanelShowAchievements")
-        table.insert(swatches, "ArmoryOptionsTooltipPanelAchievementProgressColor")
     end
     local buttons = {
         "ArmoryOptionsPanelResetScreen",
@@ -354,7 +359,7 @@ end
 
 local function SkinPaperDollStats()
     ArmoryAttributesFrame:StripTextures()
-    if U.IsBCC then
+    if U.IsBCC or U.IsWrath then
         ArmoryAttributesFrame:Point("TOPLEFT", 52, -289)
 
         U.SkinDropDownBox(ArmoryPlayerStatFrameLeftDropDown, 142)
@@ -380,7 +385,9 @@ local function SkinResistances(frameName)
         frame:SetTemplate("Default")
 
         frame:ClearAllPoints()
-        if i == 1 then
+        if U.IsWrath and frameName == "ArmoryPetMagicResFrame" then
+            frame:Point(point, relativeTo, relativePoint, -5, 0)
+        elseif i == 1  then
             frame:Point(point, relativeTo, relativePoint, 3, 0)
         else
             frame:Point(point, relativeTo, relativePoint, 0, -5)
@@ -648,6 +655,96 @@ local function SkinPaperDoll()
     SkinPaperDollInset()
 end
 
+local function SkinTalents(frameName)
+    ArmoryTalentFrame:StripTextures()
+
+    if U.IsRetail then
+        ArmoryTalentFrame.bg:StripTextures()
+
+        local numSpecs = Armory:GetNumSpecializations()
+        for i = 1, numSpecs do
+            local button = ArmoryTalentFrame["specTab"..i]
+            local icon = button:GetNormalTexture()
+            button:StripTextures()
+            icon:SetTexCoord(unpack(c.TexCoords))
+        end
+
+        local specFrame = ArmoryTalentFrame.Spec
+
+        specFrame:CreateBackdrop()
+        specFrame.backdrop:Point("TOPLEFT", 8, -18)
+        specFrame.backdrop:Point("BOTTOMRIGHT", 30, 18)
+        specFrame.specIcon:Size(50, 50)
+        specFrame.specIcon:Point("LEFT", Button, "LEFT", 15, 0)
+        specFrame.specIcon:SetDrawLayer("ARTWORK", 2)
+        specFrame.roleIcon:SetDrawLayer("ARTWORK", 2)
+        specFrame.ring:SetAlpha(0)
+        U.SkinIcon(specFrame.specIcon, true)
+
+        for tier = 1, MAX_TALENT_TIERS do
+            for column = 1, NUM_TALENT_COLUMNS do
+                local button = ArmoryTalentFrame.Talents["tier"..tier]["talent"..column]
+                button:StripTextures()
+                button.icon:SetTexCoord(unpack(c.TexCoords))
+                button.border:SetOutside(button.icon)
+                button.border:SetColorTexture(1, 1, 1)
+                button.border:SetDrawLayer("BACKGROUND", -1)
+            end
+        end
+    else
+        frameName = frameName or "ArmoryTalentFrame"
+        if frameName == "ArmoryTalentFrame" then
+            for i=1, (ARMORY_MAX_TALENT_TABS or MAX_TALENT_TABS) do
+                U.SkinTab(_G["ArmoryTalentFrameTab"..i])
+            end
+            ArmoryTalentFrameTab1:Point("TOPLEFT", 12, -49)
+        end
+
+        local scrollFrame = _G[frameName.."ScrollFrame"]
+        local scrollBar = _G[frameName.."ScrollFrameScrollBar"]
+
+        scrollFrame:StripTextures()
+        scrollFrame:CreateBackdrop("Default")
+
+        U.SkinScrollBar(scrollBar)
+        scrollBar:Point("TOPLEFT", scrollFrame, "TOPRIGHT", 10, -16)
+
+        if U.IsBCC then
+            ArmoryTalentFrameTalentPointsText:Point("BOTTOMRIGHT", ArmoryTalentFrame, "BOTTOMLEFT", 220, 84)
+        elseif U.IsWrath then
+            if frameName == "ArmoryTalentFrame" then
+                ArmoryTalentFramePointsBar:StripTextures()
+                ArmoryTalentFrameSpentPointsText:Point("LEFT", ArmoryTalentFramePointsBar, "LEFT", 12, -5)
+                ArmoryTalentFrameTalentPointsText:Point("RIGHT", ArmoryTalentFramePointsBar, "RIGHT", -12, -5)
+            else
+                scrollFrame:Point("TOPRIGHT", -65, -81)
+                scrollFrame:Height(250)
+
+                ArmoryPetTalentFrameBackgroundTopLeft:Point("TOPLEFT", 23, -81)
+                ArmoryPetTalentFrameBackgroundTopLeft:Height(200)
+                ArmoryPetTalentFrameBackgroundTopRight:Height(200)
+                ArmoryPetTalentFrameBackgroundBottomLeft:Height(90)
+                ArmoryPetTalentFrameBackgroundBottomRight:Height(90)
+            end
+        end
+
+        for i = 1, (ARMORY_MAX_NUM_TALENTS or MAX_NUM_TALENTS) do
+            local talent = _G[frameName.."Talent"..i]
+            local icon = _G[frameName.."Talent"..i.."IconTexture"]
+
+            if talent then
+                talent:StripTextures()
+                talent:SetTemplate("Default")
+                talent:StyleButton()
+
+                icon:SetInside()
+                icon:SetTexCoord(unpack(c.TexCoords))
+                icon:SetDrawLayer("ARTWORK")
+            end
+        end
+    end
+end
+
 local function SkinPets()
     if U.IsRetail then
         ArmoryPetFramePetInfo:Point("TOPLEFT", 20, -40)
@@ -692,6 +789,14 @@ local function SkinPets()
 
         ArmoryPetAttributesFrame:StripTextures()
         SkinResistances("ArmoryPetMagicResFrame")
+
+        if U.IsWrath then
+            U.SkinTab(ArmoryPetFrameTab1)
+            U.SkinTab(ArmoryPetFrameTab2)
+            ArmoryPetFrameTab1:Point("TOPLEFT", 12, -55)
+
+            SkinTalents("ArmoryPetTalentFrame")
+        end
     end
 
     for i = 1, ARMORY_NUM_PET_SLOTS do
@@ -709,73 +814,23 @@ local function SkinPets()
     end
 end
 
-local function SkinTalents()
-    ArmoryTalentFrame:StripTextures()
+local function SkinGlyphs()
+    ArmoryGlyphFrame:StripTextures()
 
-    if U.IsRetail then
-        ArmoryTalentFrame.bg:StripTextures()
+    ArmoryGlyphFrameBackground:Size(334, 385)
+	ArmoryGlyphFrameBackground:Point("TOPLEFT", 2, -36)
+	ArmoryGlyphFrameBackground:SetTexture("Interface\\Spellbook\\UI-GlyphFrame")
+	ArmoryGlyphFrameBackground:SetTexCoord(0.041015625, 0.65625, 0.140625, 0.8046875)
 
-        local numSpecs = Armory:GetNumSpecializations()
-        for i = 1, numSpecs do
-            local button = ArmoryTalentFrame["specTab"..i]
-            local icon = button:GetNormalTexture()
-            button:StripTextures()
-            icon:SetTexCoord(unpack(c.TexCoords))
-        end
+    ArmoryGlyphFrameTitleText:Point("TOP", -22, -3)
+    ArmoryGlyphFrameTitleText:SetTextColor(1, 1, 1)
 
-        local specFrame = ArmoryTalentFrame.Spec
-
-        specFrame:CreateBackdrop()
-        specFrame.backdrop:Point("TOPLEFT", 8, -18)
-        specFrame.backdrop:Point("BOTTOMRIGHT", 30, 18)
-        specFrame.specIcon:Size(50, 50)
-        specFrame.specIcon:Point("LEFT", Button, "LEFT", 15, 0)
-        specFrame.specIcon:SetDrawLayer("ARTWORK", 2)
-        specFrame.roleIcon:SetDrawLayer("ARTWORK", 2)
-        specFrame.ring:SetAlpha(0)
-        U.SkinIcon(specFrame.specIcon, true)
-
-        for tier = 1, MAX_TALENT_TIERS do
-            for column = 1, NUM_TALENT_COLUMNS do
-                local button = ArmoryTalentFrame.Talents["tier"..tier]["talent"..column]
-                button:StripTextures()
-                button.icon:SetTexCoord(unpack(c.TexCoords))
-                button.border:SetOutside(button.icon)
-                button.border:SetColorTexture(1, 1, 1)
-                button.border:SetDrawLayer("BACKGROUND", -1)
-            end
-        end
-    else
-        for i=1, ARMORY_MAX_TALENT_TABS do
-            U.SkinTab(_G["ArmoryTalentFrameTab"..i])
-        end
-        ArmoryTalentFrameTab1:Point("TOPLEFT", 12, -49)
-
-        ArmoryTalentFrameScrollFrame:StripTextures()
-        ArmoryTalentFrameScrollFrame:CreateBackdrop("Default")
-
-        U.SkinScrollBar(ArmoryTalentFrameScrollFrameScrollBar)
-        ArmoryTalentFrameScrollFrameScrollBar:Point("TOPLEFT", ArmoryTalentFrameScrollFrame, "TOPRIGHT", 10, -16)
-
-        if U.IsBCC then
-            ArmoryTalentFrameTalentPointsText:Point("BOTTOMRIGHT", ArmoryTalentFrame, "BOTTOMLEFT", 220, 84)
-        end
-
-        for i = 1, ARMORY_MAX_NUM_TALENTS do
-            local talent = _G["ArmoryTalentFrameTalent"..i]
-            local icon = _G["ArmoryTalentFrameTalent"..i.."IconTexture"]
-
-            if talent then
-                talent:StripTextures()
-                talent:SetTemplate("Default")
-                talent:StyleButton()
-
-                icon:SetInside()
-                icon:SetTexCoord(unpack(c.TexCoords))
-                icon:SetDrawLayer("ARTWORK")
-            end
-        end
-    end
+    ArmoryGlyphFrame:HookScript("OnShow", function()
+        ArmorySpellBookTitleText:Hide()
+    end)
+    ArmoryGlyphFrame:HookScript("OnHide", function()
+        ArmorySpellBookTitleText:Show()
+    end)
 end
 
 local function SkinPVP()
@@ -791,7 +846,7 @@ local function SkinPVP()
         ArmoryHonorFrameProgressButton:CreateBackdrop("Transparent")
         ArmoryHonorFrameProgressBar:Width(322)
         ArmoryHonorFrameProgressBar:SetStatusBarTexture(c.media.normTex)
-    elseif U.IsBCC then
+    elseif U.IsBCC or U.IsWrath then
         for i = 1, MAX_ARENA_TEAMS do
             local pvpTeam = _G["ArmoryPVPTeam"..i]
 
@@ -805,16 +860,16 @@ local function SkinPVP()
 
         local PVPTeamDetails = ArmoryPVPTeamDetails
         PVPTeamDetails:StripTextures()
-        PVPTeamDetails:SetTemplate('Transparent')
+        PVPTeamDetails:SetTemplate("Transparent")
 
         for i = 1, 5 do
-            local header = _G['ArmoryPVPTeamDetailsFrameColumnHeader'..i]
+            local header = _G["ArmoryPVPTeamDetailsFrameColumnHeader"..i]
             header:StripTextures()
             header:StyleButton()
         end
 
         for i = 1, 10 do
-            local button = _G['ArmoryPVPTeamDetailsButton'..i]
+            local button = _G["ArmoryPVPTeamDetailsButton"..i]
             button:Width(335)
             U.HandleButtonHighlight(button)
         end
@@ -857,12 +912,17 @@ local function SkinPVP()
 end
 
 local function SkinReputation()
-    if U.IsRetail then
-        U.SkinScrollBar(ArmoryReputationListScrollFrameScrollBar)
-        ArmoryReputationListScrollFrame:StripTextures()
-        ArmoryReputationListScrollFrame:Point("BOTTOMRIGHT", ArmoryFrameInset, -27, 4)
-        ArmoryReputationFrame:StripTextures(true)
+    ArmoryReputationFrame:StripTextures()
 
+    ArmoryReputationListScrollFrame:StripTextures()
+    if U.IsRetail then
+        ArmoryReputationListScrollFrame:Point("BOTTOMRIGHT", ArmoryFrameInset, -27, 4)
+    else
+        ArmoryReputationListScrollFrame:Point("TOPRIGHT", -28, -75)
+    end
+    U.SkinScrollBar(ArmoryReputationListScrollFrameScrollBar)
+
+    if U.IsRetail or U.IsWrath then
         ArmoryReputationFrame:HookScript("OnShow", function()
             for i = 1, Armory:GetNumFactions() do
                 local statusbar = _G["ArmoryReputationBar"..i.."ReputationBar"]
@@ -890,8 +950,6 @@ local function SkinReputation()
             end
         end)
     else
-        ArmoryReputationFrame:StripTextures()
-
         for i = 1, ARMORY_NUM_FACTIONS_DISPLAYED do
             local factionBar = _G["ArmoryReputationBar"..i]
             local factionHeader = _G["ArmoryReputationHeader"..i]
@@ -937,11 +995,9 @@ local function SkinReputation()
                 end
             end
         end)
+    end
 
-        ArmoryReputationListScrollFrame:StripTextures()
-        ArmoryReputationListScrollFrame:Point("TOPRIGHT", -28, -75)
-        U.SkinScrollBar(ArmoryReputationListScrollFrameScrollBar)
-
+    if not U.IsRetail then
         ArmoryReputationDetailFrame:StripTextures()
         ArmoryReputationDetailFrame:SetTemplate("Transparent")
         ArmoryReputationDetailFrame:Point("TOPLEFT", ArmoryReputationFrame, "TOPRIGHT", 2, -12)
@@ -1517,36 +1573,70 @@ local function SkinQuests()
     ArmoryQuestLogDetailScrollFrame:Width(298)
     U.SkinScrollBar(ArmoryQuestLogDetailScrollFrameScrollBar)
 
+    local base, updateFunc
+    if U.IsWrath then
+        ArmoryQuestLogDetailScrollFrame:Height(262)
+        base = "ArmoryQuestInfo"
+        updateFunc = "ArmoryQuestInfo_Display"
+    else
+        base = "ArmoryQuestLog"
+        updateFunc ="ArmoryQuestFrameItems_Update"
+    end
+
     for i = 1, MAX_NUM_ITEMS do
-        local questItem = _G["ArmoryQuestLogItem"..i]
+        local questItem = _G[base.."Item"..i]
         SkinQuestInfoItem(questItem)
     end
 
     ArmoryQuestLogCount:ClearAllPoints()
     ArmoryQuestLogCount:Point("BOTTOMRIGHT", ArmoryQuestLogListScrollFrame, "TOPRIGHT", 330, 0)
 
-    hooksecurefunc("ArmoryQuestFrameItems_Update", function()
-        local headers = {
-            ArmoryQuestLogQuestTitle,
-            ArmoryQuestLogDescriptionTitle,
-            ArmoryQuestLogRewardTitleText,
-            ArmoryQuestLogItemChooseText
-        }
+    hooksecurefunc(updateFunc, function()
+        local headers, texts
+        if U.IsWrath then
+            headers = {
+                ArmoryQuestInfoTitleHeader,
+                ArmoryQuestInfoObjectivesHeader,
+                ArmoryQuestInfoDescriptionHeader,
+                ArmoryQuestInfoRewardsHeader
+            }
+            texts = {
+                ArmoryQuestInfoDescriptionText,
+                ArmoryQuestInfoObjectivesText,
+                ArmoryQuestInfoGroupSize,
+                ArmoryQuestInfoRewardText,
+                ArmoryQuestInfoItemChooseText,
+                ArmoryQuestInfoItemReceiveText,
+                ArmoryQuestInfoSpellLearnText,
+                ArmoryQuestInfoHonorFrameHonorReceiveText,
+                ArmoryQuestInfoArenaPointsFrameReceiveText,
+                ArmoryQuestInfoTalentFrameReceiveText,
+                ArmoryQuestInfoXPFrameReceiveText,
+                ArmoryQuestInfoPlayerTitleFrameTitle,
+                ArmoryQuestInfoTimerText
+            }
+        else
+            headers = {
+                ArmoryQuestLogQuestTitle,
+                ArmoryQuestLogDescriptionTitle,
+                ArmoryQuestLogRewardTitleText,
+                ArmoryQuestLogItemChooseText
+            }
+            texts = {
+                ArmoryQuestLogObjectivesText,
+                ArmoryQuestLogSuggestedGroupNum,
+                ArmoryQuestLogQuestDescription,
+                ArmoryQuestLogItemChooseText,
+                ArmoryQuestLogItemReceiveText,
+                ArmoryQuestLogSpellLearnText,
+                ArmoryQuestLogPlayerTitleText,
+                ArmoryQuestLogTimerText
+            }
+           end
 
         for _, header in ipairs(headers) do
             header:SetTextColor(1, 0.80, 0.10)
         end
-
-        local texts = {
-            ArmoryQuestLogObjectivesText,
-            ArmoryQuestLogSuggestedGroupNum,
-            ArmoryQuestLogQuestDescription,
-            ArmoryQuestLogItemChooseText,
-            ArmoryQuestLogItemReceiveText,
-            ArmoryQuestLogSpellLearnText,
-            ArmoryQuestLogPlayerTitleText,
-            ArmoryQuestLogTimerText
-        }
 
         for _, text in ipairs(texts) do
             text:SetTextColor(1, 1, 1)
@@ -1555,9 +1645,9 @@ local function SkinQuests()
         local requiredMoney = Armory:GetQuestLogRequiredMoney()
         if requiredMoney > 0 then
             if requiredMoney > Armory:GetMoney() then
-                ArmoryQuestLogRequiredMoneyText:SetTextColor(0.6, 0.6, 0.6)
+                _G[base.."RequiredMoneyText"]:SetTextColor(0.6, 0.6, 0.6)
             else
-                ArmoryQuestLogRequiredMoneyText:SetTextColor(1, 0.80, 0.10)
+                _G[base.."RequiredMoneyText"]:SetTextColor(1, 0.80, 0.10)
             end
         end
 
@@ -1569,7 +1659,7 @@ local function SkinQuests()
             _, objType, finished = Armory:GetQuestLogLeaderBoard(i)
             if objType ~= "spell" then
                 numVisibleObjectives = numVisibleObjectives + 1
-                local objective = _G["ArmoryQuestLogObjective"..numVisibleObjectives]
+                local objective = _G[base.."Objective"..numVisibleObjectives]
 
                 if objective then
                     if finished then
@@ -1582,7 +1672,7 @@ local function SkinQuests()
         end
 
         for i = 1, MAX_NUM_ITEMS do
-            local questItem = _G["ArmoryQuestLogItem"..i]
+            local questItem = _G[base.."Item"..i]
             if not questItem:IsShown() then break end
 
             local point, relativeTo, relativePoint, x, y = questItem:GetPoint()
@@ -1906,9 +1996,9 @@ local function SkinTradeSkill()
                     local Icon = Button.Icon
 
                     Icon:SetTexCoord(unpack(c.TexCoords))
-                    Icon:SetDrawLayer('OVERLAY')
+                    Icon:SetDrawLayer("OVERLAY")
                     if not Icon.backdrop then
-                        Icon.backdrop = CreateFrame('Frame', nil, Button, 'BackdropTemplate')
+                        Icon.backdrop = CreateFrame("Frame", nil, Button, "BackdropTemplate")
                         Icon.backdrop:SetFrameLevel(Button:GetFrameLevel() - 1)
                         Icon.backdrop:SetTemplate()
                         Icon.backdrop:SetOutside(Icon)
@@ -1949,15 +2039,15 @@ local function SkinAchievements()
     U.SkinTab(ArmoryAchievementFrameTab2)
 
     hooksecurefunc("ArmoryAchievementFrame_SetRowType", function(achievementRow, rowType, hasQuantity)
-    if rowType == 0 then
-    achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 29, 0)
-elseif rowType == 1 then
-    achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 47, 0)
-elseif rowType == 2 then
-    achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 5, 0)
-elseif rowType == 3 then
-    achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 24, 0)
-end
+        if rowType == 0 then
+            achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 29, 0)
+        elseif rowType == 1 then
+            achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 47, 0)
+        elseif rowType == 2 then
+            achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 5, 0)
+        elseif rowType == 3 then
+            achievementRow:Point("LEFT", ArmoryAchievementFrame, "LEFT", 24, 0)
+        end
     end)
 
     ArmoryAchievementListScrollFrame:HookScript("OnShow", function()
@@ -2140,7 +2230,9 @@ local function SkinQTips()
                 if key == name then
                     if not U.IsClassic then
                         tooltip:SetScript("OnShow", function(self)
-                            self:SetTemplate("Transparent")
+                            if not U.IsWrath then
+                                self:SetTemplate("Transparent")
+                            end
                             if self.slider then
                                 U.SkinSliderFrame(self.slider)
                             end
@@ -2185,10 +2277,15 @@ Armory:Execute(function()
     SkinFind()
     SkinLookup()
     SkinQTips()
+    if U.IsRetail or U.IsWrath then
+        SkinAchievements()
+    end
     if U.IsRetail then
         SkinOverlay()
         SkinGearSet()
-        SkinAchievements()
         SkinArtifacts()
+    end
+    if U.IsWrath then
+        SkinGlyphs()
     end
 end)

@@ -10,6 +10,10 @@
 #@version-bcc@
 ## Title: |cff1784d1ElvUI TBC|r Armory
 #@end-version-bcc@
+## Interface-WOTLKC: 30400
+#@version-wrath@
+## Title: |cff1784d1ElvUI Wrath|r Armory
+#@end-version-wrath@
 ## Version: @project-version@
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
