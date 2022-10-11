@@ -1,6 +1,6 @@
 if not (IsAddOnLoaded("ElvUI") or IsAddOnLoaded("Tukui")) then return end
 
-local U = select(2, ...)
+local AddOnName, U = ...
 local s, c
 
 U.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
@@ -16,6 +16,8 @@ if ElvUI then
     U.ccolor = E.myclass
     s = S
     c = E
+
+    E.Libs.EP:RegisterPlugin(AddOnName)
 else
     local T, C, L, G = unpack(Tukui)
     U.s = T
