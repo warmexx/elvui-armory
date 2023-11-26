@@ -1,5 +1,3 @@
-if not (IsAddOnLoaded("ElvUI") or IsAddOnLoaded("Tukui")) then return end
-
 local AddOnName, U = ...
 local s, c
 
@@ -7,6 +5,8 @@ U.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 U.IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 U.IsBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 U.IsWrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
+
+U.TexCoords = { 0.1, 0.9, 0.1, 0.9 }
 
 if ElvUI then
     local E, L, V, P, G, DF = unpack(ElvUI)
@@ -25,7 +25,6 @@ else
     U.ccolor = T.myclass
     s = T
     c = C
-    c.TexCoords = {.08, .92, .08, .92}
 end
 
 function U.SkinButton(self, strip)
@@ -152,8 +151,12 @@ function U.SkinFrame(self)
 end
 
 function U.SkinTooltip(self)
-    if U.IsRetail and not self.backdrop then self:CreateBackdrop() end
-    self:SetTemplate("Transparent", nil, true)
+    if U.IsRetail then
+        if not self.backdrop then self:CreateBackdrop() end
+        self.NineSlice:SetTemplate("Transparent")
+    else
+        self:SetTemplate("Transparent", nil, true)
+    end
 end
 
 function U.SkinStatusBar(self)
@@ -174,9 +177,8 @@ function U.SkinItemButton(button, icon)
     else
         button:SetTemplate("Default", true)
     end
-
+    icon:SetTexCoord(unpack(U.TexCoords))
     icon:SetInside()
-    icon:SetTexCoord(unpack(c.TexCoords))
 
     hooksecurefunc(button.IconBorder, "SetVertexColor", function(self, r, g, b)
         local backdrop = U.IsRetail and self:GetParent().backdrop or self:GetParent()
@@ -193,11 +195,68 @@ function U.SkinItemButton(button, icon)
     end)
 end
 
+local function SetIconTexture(icon, ...)
+    local arg1 = ...
+    if (arg1 == 130764 or arg1 == "Interface\\Buttons\\UI-EmptySlot-Disabled") or (arg1 == 130841 or arg1 == "Interface\\Buttons\\UI-Quickslot2") then
+        icon:SetTexture(nil)
+    else
+        icon:SetTexture(...)
+        icon:SetTexCoord(unpack(U.TexCoords))
+    end
+end
+
+function U.SkinInventoryButton(button)
+    if button.inset then return end
+
+    for i = 1, button:GetNumRegions() do
+        local region = select(i, button:GetRegions())
+        if region and region:GetObjectType() == "Texture" and region ~= button.searchOverlay and region ~= button.icon then
+            region:SetTexture(nil)
+        end
+    end
+
+    button.inset = CreateFrame("Button", nil, button)
+    button.inset:SetTemplate("Default", true)
+    button.inset:SetInside()
+    button.inset:StyleButton()
+    button.inset:SetScript("OnClick", function(self)
+        local button = self:GetParent()
+        button:GetScript("OnClick")(button)
+    end)
+    button.inset:SetScript("OnEnter", function(self)
+        local button = self:GetParent()
+        self.hover:Show()
+        button:GetScript("OnEnter")(button)
+    end)
+    button.inset:SetScript("OnLeave", function(self)
+        local button = self:GetParent()
+        self.hover:Hide()
+        button:GetScript("OnLeave")(button)
+    end)
+
+    button.inset.icon = button.inset:CreateTexture(nil, "BORDER")
+    button.inset.icon:SetInside()
+    SetIconTexture(button.inset.icon, button.icon:GetTexture())
+
+    button.icon:Hide()
+    button.icon.SetTexture = function(self, ...)
+        local button = self:GetParent()
+        SetIconTexture(button.inset.icon, ...)
+    end
+
+    if _G[button:GetName().."Count"] then
+        _G[button:GetName().."Count"]:SetParent(button.inset)
+    end
+    button.searchOverlay:SetOutside(button.inset.icon)
+    button.searchOverlay:SetParent(button.inset)
+end
+
 function U.ColorItemBorder(object, quality)
     local backdrop = U.IsRetail and object.backdrop or object
     if not backdrop.SetBackdropBorderColor then return end
     if quality and quality > 1 then
-        backdrop:SetBackdropBorderColor(GetItemQualityColor(quality))
+        local r, g, b = GetItemQualityColor(quality)
+        backdrop:SetBackdropBorderColor(r, g, b)
     elseif c.media then
         backdrop:SetBackdropBorderColor(unpack(c.media.bordercolor))
     elseif c.Medias then
@@ -207,7 +266,7 @@ end
 
 function U.SkinInventoryLine(object)
     object:SetHighlightFontObject(object:GetNormalFontObject())
-    object:GetNormalTexture():SetTexCoord(unpack(c.TexCoords))
+    object:GetNormalTexture():SetTexCoord(unpack(U.TexCoords))
     object:GetNormalTexture():SetSize(14, 14)
     object:GetDisabledTexture():Height(14)
 end

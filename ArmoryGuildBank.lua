@@ -1,29 +1,26 @@
-if not (IsAddOnLoaded("ElvUI") or IsAddOnLoaded("Tukui")) then return end
-
 local U = select(2, ...)
 local s = U.s
 local c = U.c
 
+local GUILDBANK_LINES_DISPLAYED = 20
+
+local NUM_SLOTS_PER_GUILDBANK_GROUP = 14
+local NUM_GUILDBANK_COLUMNS = 7
+
 local function SkinOptions()
     local checkBoxes = {
-        "ArmoryOptionsGuildBankPanelUniItemCountColor",
-        "ArmoryOptionsGuildBankPanelMyGuildItemCount",
-        "ArmoryOptionsGuildBankPanelPersonalGuildItemCount",
-        "ArmoryOptionsGuildBankPanelGlobalItemCount",
-        "ArmoryOptionsGuildBankPanelCrossFactionItemCount",
-        "ArmoryOptionsGuildBankPanelIncludeInFind",
-        "ArmoryOptionsGuildBankPanelIntegrate",
-    }
-    local swatches = {
-        "ArmoryOptionsGuildBankPanelShowItemCount",
+        ArmoryOptionsGuildBankPanelUniItemCountColor or ArmoryOptionsGuildBankPanel.UniItemCountColor,
+        ArmoryOptionsGuildBankPanelMyGuildItemCount or ArmoryOptionsGuildBankPanel.MyGuildItemCount,
+        ArmoryOptionsGuildBankPanelPersonalGuildItemCount or ArmoryOptionsGuildBankPanel.PersonalGuildItemCount,
+        ArmoryOptionsGuildBankPanelGlobalItemCount or ArmoryOptionsGuildBankPanel.GlobalItemCount,
+        ArmoryOptionsGuildBankPanelCrossFactionItemCount or ArmoryOptionsGuildBankPanel.CrossFactionItemCount,
+        ArmoryOptionsGuildBankPanelIncludeInFind or ArmoryOptionsGuildBankPanel.IncludeInFind,
+        ArmoryOptionsGuildBankPanelIntegrate or ArmoryOptionsGuildBankPanel.Integrate,
+        ArmoryOptionsGuildBankPanelShowItemCountCheck or ArmoryOptionsGuildBankPanel.ShowItemCount
     }
 
-    for _, name in ipairs(checkBoxes) do
-        U.SkinCheckBox(_G[name])
-    end
-
-    for _, name in ipairs(swatches) do
-        U.SkinCheckBox(_G[name.."Check"])
+    for _, checkbox in ipairs(checkBoxes) do
+        U.SkinCheckBox(checkbox)
     end
 end
 
@@ -47,13 +44,17 @@ local function SkinInventory()
     end)
 
     U.SkinTab(ArmoryInventoryFrameTab3)
+    if U.IsRetail then
+        ArmoryInventoryFrameTab3:ClearAllPoints()
+        ArmoryInventoryFrameTab3:Point("LEFT", ArmoryInventoryFrameTab2, "RIGHT", -5, 0)
+    end
 end
 
 local function SkinListGuildBank()
     U.SkinArmoryFrame(ArmoryListGuildBankFrame)
-    
+
     ArmoryListGuildBankFrameMessage:Point("TOP", 0, -120)
-    
+
     local kill = {
         "EmblemBackgroundUL",
         "EmblemBackgroundUR",
@@ -64,13 +65,19 @@ local function SkinListGuildBank()
         "EmblemBL",
         "EmblemBR",
     }
-    
+
     for i, name in ipairs(kill) do
-        _G["ArmoryListGuildBankFrame"..name]:Kill()
+        if _G["ArmoryListGuildBankFrame"..name] then
+            _G["ArmoryListGuildBankFrame"..name]:Kill()
+        end
     end
-    
+
     ArmoryListGuildBankFrameTab1:ClearAllPoints()
     ArmoryListGuildBankFrameTab1:Point("TOPLEFT", ArmoryListGuildBankFrame, "BOTTOMLEFT", 19, 2)
+    if U.IsRetail then
+        ArmoryListGuildBankFrameTab2:ClearAllPoints()
+        ArmoryListGuildBankFrameTab2:Point("LEFT", ArmoryListGuildBankFrameTab1, "RIGHT", -5, 0)
+    end
     U.SkinTab(ArmoryListGuildBankFrameTab1)
     U.SkinTab(ArmoryListGuildBankFrameTab2)
 
@@ -78,21 +85,21 @@ local function SkinListGuildBank()
     ArmoryListGuildBankFrameMoneyBackgroundFrame:SetWidth(150)
     ArmoryListGuildBankFrameMoneyBackgroundFrame:ClearAllPoints()
     ArmoryListGuildBankFrameMoneyBackgroundFrame:Point("TOPRIGHT", -8, -35)
-    
+
     ArmoryListGuildBankScrollFrame:StripTextures()
     U.SkinScrollBar(ArmoryListGuildBankScrollFrameScrollBar)
     ArmoryListGuildBankScrollFrame:Point("TOPRIGHT", -33, -96)
     ArmoryListGuildBankScrollFrame:Height(321)
 
     ArmoryGuildBankLine1:Point("TOPLEFT", 10, -98)
-    for i = 1 ,ARMORY_GUILDBANK_LINES_DISPLAYED do
+    for i = 1, GUILDBANK_LINES_DISPLAYED do
         U.SkinInventoryLine(_G["ArmoryGuildBankLine"..i])
     end
-    
+
     hooksecurefunc("ArmoryListGuildBankFrame_AllignCommonControls", function(self)
         ArmoryGuildBankFactionFrame:ClearAllPoints()
         ArmoryGuildBankFactionFrame:Point("TOP", 0, -62)
-        
+
         if not self.searchBox then
             ArmoryGuildBankFrameEditBox:SetHeight(22)
             U.SkinSearchBox(ArmoryGuildBankFrameEditBox, 135)
@@ -103,7 +110,7 @@ local function SkinListGuildBank()
 
         ArmoryGuildBankFilterDropDown:ClearAllPoints()
         ArmoryGuildBankFilterDropDown:Point("TOPRIGHT", ArmoryListGuildBankFrameMoneyBackgroundFrame, "BOTTOMRIGHT",  40, 0)
-        
+
         ArmoryGuildBankNameDropDown:ClearAllPoints()
         ArmoryGuildBankNameDropDown:Point("TOPLEFT", -13, -56)
         ArmoryGuildBankNameDropDown:Width(164)
@@ -113,10 +120,10 @@ end
 local function SkinIconGuildBank()
     ArmoryIconGuildBankFrame:StripTextures()
     ArmoryIconGuildBankFrame:CreateBackdrop("Transparent")
-    ArmoryIconGuildBankFrameEmblemFrame:StripTextures(true) 
+    ArmoryIconGuildBankFrameEmblemFrame:StripTextures(true)
     ArmoryIconGuildBankTabTitle:ClearAllPoints()
     ArmoryIconGuildBankTabTitle:Point("TOP", ArmoryIconGuildBankFrame, "TOP", 0, -40)
-    
+
     for i = 1, ArmoryIconGuildBankFrame:GetNumChildren() do
         local child = select(i, ArmoryIconGuildBankFrame:GetChildren())
         if child.GetPushedTexture and child:GetPushedTexture() and not child:GetName() then
@@ -132,42 +139,39 @@ local function SkinIconGuildBank()
 
     ArmoryIconGuildBankFrameTab1:ClearAllPoints()
     ArmoryIconGuildBankFrameTab1:Point("TOPLEFT", ArmoryIconGuildBankFrame, "BOTTOMLEFT", 19, 2)
+    if U.IsRetail then
+        ArmoryIconGuildBankFrameTab2:ClearAllPoints()
+        ArmoryIconGuildBankFrameTab2:Point("LEFT", ArmoryIconGuildBankFrameTab1, "RIGHT", -5, 0)
+    end
     U.SkinTab(ArmoryIconGuildBankFrameTab1)
     U.SkinTab(ArmoryIconGuildBankFrameTab2)
-    
-    for i = 1, ARMORY_NUM_GUILDBANK_COLUMNS do
+
+    for i = 1, NUM_GUILDBANK_COLUMNS do
         _G["ArmoryIconGuildBankColumn"..i]:StripTextures()
-        
-        for j = 1, ARMORY_NUM_SLOTS_PER_GUILDBANK_GROUP do
-            local button = _G["ArmoryIconGuildBankColumn"..i.."Button"..j]
-            local icon = _G["ArmoryIconGuildBankColumn"..i.."Button"..j.."IconTexture"]
-            local texture = _G["ArmoryIconGuildBankColumn"..i.."Button"..j.."NormalTexture"]
-            if texture then
-                texture:SetTexture(nil)
-            end
-            button.searchOverlay:Hide()
-            U.SkinItemButton(button, icon)
+
+        for j = 1, NUM_SLOTS_PER_GUILDBANK_GROUP do
+            U.SkinInventoryButton(_G["ArmoryIconGuildBankColumn"..i.."Button"..j])
         end
     end
-    
+
     for i = 1, MAX_GUILDBANK_TABS do
         local button = _G["ArmoryIconGuildBankTab"..i.."Button"]
         local texture = _G["ArmoryIconGuildBankTab"..i.."ButtonIconTexture"]
         _G["ArmoryIconGuildBankTab"..i]:StripTextures(true)
-        
+
         button:StripTextures()
         button:StyleButton(true)
 		button:CreateBackdrop(nil, true)
 		button.backdrop:SetAllPoints()
 
         texture:SetInside()
-        texture:SetTexCoord(unpack(c.TexCoords))
+        texture:SetTexCoord(unpack(U.TexCoords))
     end
-        
+
     hooksecurefunc("ArmoryIconGuildBankFrame_AllignCommonControls", function(self)
         ArmoryGuildBankFactionFrame:ClearAllPoints()
         ArmoryGuildBankFactionFrame:Point("LEFT", ArmoryGuildBankNameDropDown, "RIGHT", 15, -3)
-        
+
         if not self.searchBox then
             ArmoryGuildBankFrameEditBox:SetHeight(22)
             U.SkinSearchBox(ArmoryGuildBankFrameEditBox, 135)
@@ -178,7 +182,7 @@ local function SkinIconGuildBank()
 
         ArmoryGuildBankFilterDropDown:ClearAllPoints()
         ArmoryGuildBankFilterDropDown:Point("TOPRIGHT", 33, -35)
-        
+
         ArmoryGuildBankNameDropDown:ClearAllPoints()
         ArmoryGuildBankNameDropDown:Point("TOPLEFT", -13, -3)
         ArmoryGuildBankNameDropDown:Width(164)
@@ -187,7 +191,7 @@ end
 
 local function SkinGuildBank()
     ArmoryGuildBankFrame.filter = ""
-    
+
     ArmoryGuildBankFrameDeleteButton:Kill()
     U.SkinDropDownBox(ArmoryGuildBankNameDropDown, 160)
 
@@ -199,9 +203,10 @@ local function SkinGuildBank()
     SkinIconGuildBank()
 end
 
-Armory:Execute(function()
+do
     if not AGB then return end
+
     SkinOptions()
     SkinInventory()
     SkinGuildBank()
-end)
+end
