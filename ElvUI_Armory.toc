@@ -6,10 +6,6 @@
 #@version-classic@
 ## Title: |cff1784d1ElvUI Classic|r Armory
 #@end-version-classic@
-## Interface-BCC: 20504
-#@version-bcc@
-## Title: |cff1784d1ElvUI TBC|r Armory
-#@end-version-bcc@
 ## Interface-WOTLKC: 30403
 #@version-wrath@
 ## Title: |cff1784d1ElvUI Wrath|r Armory
