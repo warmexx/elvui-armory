@@ -390,7 +390,7 @@ end
 
 local function SkinPaperDollStats()
     ArmoryAttributesFrame:StripTextures()
-    if U.IsBCC or U.IsWrath then
+    if U.IsWrath then
         ArmoryAttributesFrame:Point("TOPLEFT", 52, -289)
 
         U.SkinDropDownBox(ArmoryPlayerStatFrameLeftDropDown, 142)
@@ -734,9 +734,7 @@ local function SkinTalents(frameName)
         U.SkinScrollBar(scrollBar)
         scrollBar:Point("TOPLEFT", scrollFrame, "TOPRIGHT", 10, -16)
 
-        if U.IsBCC then
-            ArmoryTalentFrameTalentPointsText:Point("BOTTOMRIGHT", ArmoryTalentFrame, "BOTTOMLEFT", 220, 84)
-        elseif U.IsWrath then
+        if U.IsWrath then
             if frameName == "ArmoryTalentFrame" then
                 ArmoryTalentFramePointsBar:StripTextures()
                 ArmoryTalentFrameSpentPointsText:Point("LEFT", ArmoryTalentFramePointsBar, "LEFT", 12, -5)
@@ -872,7 +870,7 @@ local function SkinPVP()
         ArmoryHonorFrameProgressButton:CreateBackdrop("Transparent")
         ArmoryHonorFrameProgressBar:Width(322)
         ArmoryHonorFrameProgressBar:SetStatusBarTexture(c.media.normTex)
-    elseif U.IsBCC or U.IsWrath then
+    elseif U.IsWrath then
         for i = 1, MAX_ARENA_TEAMS do
             local pvpTeam = _G["ArmoryPVPTeam"..i]
 
