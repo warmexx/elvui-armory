@@ -25,6 +25,8 @@ local EVENTS_TO_DISPLAY = 11
 local FIND_LINES_DISPLAYED = 13
 local LOOKUP_LINES_DISPLAYED = 19
 
+local GetItemInfo = C_Item.GetItemInfo or GetItemInfo;
+
 local function ColorItemBorder(b, link)
     local quality, _
     if link then

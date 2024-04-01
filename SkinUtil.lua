@@ -1,6 +1,8 @@
 local AddOnName, U = ...
 local s, c
 
+local GetItemQualityColor = C_Item.GetItemQualityColor or GetItemQualityColor;
+
 U.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 U.IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
 U.IsWrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
