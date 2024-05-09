@@ -6,10 +6,6 @@
 #@version-classic@
 ## Title: |cff1784d1ElvUI Classic|r Armory
 #@end-version-classic@
-## Interface-WOTLKC: 30403
-#@version-wrath@
-## Title: |cff1784d1ElvUI Wrath|r Armory
-#@end-version-wrath@
 ## Version: @project-version@
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory

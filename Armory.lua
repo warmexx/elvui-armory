@@ -194,15 +194,14 @@ local function SkinOptions()
         ArmoryOptionsMiscPanelEnhancedTips or ArmoryOptionsMiscPanel.EnhancedTips,
         ArmoryOptionsMiscPanelSystemWarnings or ArmoryOptionsMiscPanel.SystemWarnings
     }
-    if U.IsRetail or U.IsWrath then
+    if U.IsRetail then
         table.insert(checkBoxes, ArmoryOptionsModulePanelAchievements or ArmoryOptionsModulePanel.Achievements)
         table.insert(checkBoxes, ArmoryOptionsModulePanelStatistics or ArmoryOptionsModulePanel.Statistics)
 
         table.insert(checkBoxes, ArmoryOptionsTooltipPanelShowAchievementsCheck or ArmoryOptionsTooltipPanel.ShowAchievements)
         table.insert(checkBoxes, ArmoryOptionsTooltipPanelAchievementProgressColorCheck or ArmoryOptionsTooltipPanel.AchievementInProgress)
         table.insert(checkBoxes, ArmoryOptionsTooltipPanelShowGems or ArmoryOptionsTooltipPanel.ShowGems)
-    end
-    if U.IsRetail then
+
         table.insert(checkBoxes, ArmoryOptionsModulePanel.Currency)
         table.insert(checkBoxes, ArmoryOptionsModulePanel.Artifacts)
 
@@ -392,14 +391,6 @@ end
 
 local function SkinPaperDollStats()
     ArmoryAttributesFrame:StripTextures()
-    if U.IsWrath then
-        ArmoryAttributesFrame:Point("TOPLEFT", 52, -289)
-
-        U.SkinDropDownBox(ArmoryPlayerStatFrameLeftDropDown, 142)
-        U.SkinDropDownBox(ArmoryPlayerStatFrameRightDropDown, 142)
-        ArmoryPlayerStatLeftTop:Point("TOPLEFT", -4, 0)
-        ArmoryPlayerStatRightTop:Point("TOPLEFT", ArmoryPlayerStatLeftTop, "TOPRIGHT", 3, 0)
-    end
 end
 
 local ResistanceCoords = {
@@ -418,9 +409,7 @@ local function SkinResistances(frameName)
         frame:SetTemplate("Default")
 
         frame:ClearAllPoints()
-        if U.IsWrath and frameName == "ArmoryPetMagicResFrame" then
-            frame:Point(point, relativeTo, relativePoint, -5, 0)
-        elseif i == 1  then
+        if i == 1  then
             frame:Point(point, relativeTo, relativePoint, 3, 0)
         else
             frame:Point(point, relativeTo, relativePoint, 0, -5)
@@ -736,23 +725,6 @@ local function SkinTalents(frameName)
         U.SkinScrollBar(scrollBar)
         scrollBar:Point("TOPLEFT", scrollFrame, "TOPRIGHT", 10, -16)
 
-        if U.IsWrath then
-            if frameName == "ArmoryTalentFrame" then
-                ArmoryTalentFramePointsBar:StripTextures()
-                ArmoryTalentFrameSpentPointsText:Point("LEFT", ArmoryTalentFramePointsBar, "LEFT", 12, -5)
-                ArmoryTalentFrameTalentPointsText:Point("RIGHT", ArmoryTalentFramePointsBar, "RIGHT", -12, -5)
-            else
-                scrollFrame:Point("TOPRIGHT", -65, -81)
-                scrollFrame:Height(250)
-
-                ArmoryPetTalentFrameBackgroundTopLeft:Point("TOPLEFT", 23, -81)
-                ArmoryPetTalentFrameBackgroundTopLeft:Height(200)
-                ArmoryPetTalentFrameBackgroundTopRight:Height(200)
-                ArmoryPetTalentFrameBackgroundBottomLeft:Height(90)
-                ArmoryPetTalentFrameBackgroundBottomRight:Height(90)
-            end
-        end
-
         for i = 1, (ARMORY_MAX_NUM_TALENTS or MAX_NUM_TALENTS) do
             local talent = _G[frameName.."Talent"..i]
             local icon = _G[frameName.."Talent"..i.."IconTexture"]
@@ -815,14 +787,6 @@ local function SkinPets()
 
         ArmoryPetAttributesFrame:StripTextures()
         SkinResistances("ArmoryPetMagicResFrame")
-
-        if U.IsWrath then
-            U.SkinTab(ArmoryPetFrameTab1)
-            U.SkinTab(ArmoryPetFrameTab2)
-            ArmoryPetFrameTab1:Point("TOPLEFT", 12, -55)
-
-            SkinTalents("ArmoryPetTalentFrame")
-        end
     end
 
     for i = 1, NUM_PET_SLOTS do
@@ -840,25 +804,6 @@ local function SkinPets()
     end
 end
 
-local function SkinGlyphs()
-    ArmoryGlyphFrame:StripTextures()
-
-    ArmoryGlyphFrameBackground:Size(334, 385)
-    ArmoryGlyphFrameBackground:Point("TOPLEFT", 2, -36)
-    ArmoryGlyphFrameBackground:SetTexture("Interface\\Spellbook\\UI-GlyphFrame")
-    ArmoryGlyphFrameBackground:SetTexCoord(0.041015625, 0.65625, 0.140625, 0.8046875)
-
-    ArmoryGlyphFrameTitleText:Point("TOP", -22, -3)
-    ArmoryGlyphFrameTitleText:SetTextColor(1, 1, 1)
-
-    ArmoryGlyphFrame:HookScript("OnShow", function()
-        ArmorySpellBookTitleText:Hide()
-    end)
-    ArmoryGlyphFrame:HookScript("OnHide", function()
-        ArmorySpellBookTitleText:Show()
-    end)
-end
-
 local function SkinPVP()
     ArmoryPVPFrame:StripTextures(true)
 
@@ -872,35 +817,6 @@ local function SkinPVP()
         ArmoryHonorFrameProgressButton:CreateBackdrop("Transparent")
         ArmoryHonorFrameProgressBar:Width(322)
         ArmoryHonorFrameProgressBar:SetStatusBarTexture(c.media.normTex)
-    elseif U.IsWrath then
-        for i = 1, MAX_ARENA_TEAMS do
-            local pvpTeam = _G["ArmoryPVPTeam"..i]
-
-            pvpTeam:StripTextures()
-            pvpTeam:CreateBackdrop("Default")
-            pvpTeam.backdrop:Point("TOPLEFT", 9, -4)
-            pvpTeam.backdrop:Point("BOTTOMRIGHT", -24, 3)
-
-            _G["ArmoryPVPTeam"..i.."Highlight"]:Kill()
-        end
-
-        local PVPTeamDetails = ArmoryPVPTeamDetails
-        PVPTeamDetails:StripTextures()
-        PVPTeamDetails:SetTemplate("Transparent")
-
-        for i = 1, 5 do
-            local header = _G["ArmoryPVPTeamDetailsFrameColumnHeader"..i]
-            header:StripTextures()
-            header:StyleButton()
-        end
-
-        for i = 1, 10 do
-            local button = _G["ArmoryPVPTeamDetailsButton"..i]
-            button:Width(335)
-            U.HandleButtonHighlight(button)
-        end
-
-        U.SkinCloseButton(ArmoryPVPTeamDetailsCloseButton)
     else
         ArmoryPVPFrame:SetAllPoints()
 
@@ -952,7 +868,7 @@ local function SkinReputation()
     end
     U.SkinScrollBar(ArmoryReputationListScrollFrameScrollBar)
 
-    if U.IsRetail or U.IsWrath then
+    if U.IsRetail then
         ArmoryReputationFrame:HookScript("OnShow", function()
             for i = 1, Armory:GetNumFactions() do
                 local statusbar = _G["ArmoryReputationBar"..i.."ReputationBar"]
@@ -1590,66 +1506,31 @@ local function SkinQuests()
     ArmoryQuestLogDetailScrollFrame:Width(298)
     U.SkinScrollBar(ArmoryQuestLogDetailScrollFrameScrollBar)
 
-    local base, updateFunc
-    if U.IsWrath then
-        ArmoryQuestLogDetailScrollFrame:Height(262)
-        base = "ArmoryQuestInfo"
-        updateFunc = "ArmoryQuestInfo_Display"
-    else
-        base = "ArmoryQuestLog"
-        updateFunc ="ArmoryQuestFrameItems_Update"
-    end
-
     for i = 1, MAX_NUM_ITEMS do
-        local questItem = _G[base.."Item"..i]
+        local questItem = _G["ArmoryQuestLogItem"..i]
         SkinQuestInfoItem(questItem)
     end
 
     ArmoryQuestLogCount:ClearAllPoints()
     ArmoryQuestLogCount:Point("BOTTOMRIGHT", ArmoryQuestLogListScrollFrame, "TOPRIGHT", 330, 0)
 
-    hooksecurefunc(updateFunc, function()
-        local headers, texts
-        if U.IsWrath then
-            headers = {
-                ArmoryQuestInfoTitleHeader,
-                ArmoryQuestInfoObjectivesHeader,
-                ArmoryQuestInfoDescriptionHeader,
-                ArmoryQuestInfoRewardsHeader
-            }
-            texts = {
-                ArmoryQuestInfoDescriptionText,
-                ArmoryQuestInfoObjectivesText,
-                ArmoryQuestInfoGroupSize,
-                ArmoryQuestInfoRewardText,
-                ArmoryQuestInfoItemChooseText,
-                ArmoryQuestInfoItemReceiveText,
-                ArmoryQuestInfoSpellLearnText,
-                ArmoryQuestInfoHonorFrameHonorReceiveText,
-                ArmoryQuestInfoArenaPointsFrameReceiveText,
-                ArmoryQuestInfoTalentFrameReceiveText,
-                ArmoryQuestInfoXPFrameReceiveText,
-                ArmoryQuestInfoPlayerTitleFrameTitle,
-                ArmoryQuestInfoTimerText
-            }
-        else
-            headers = {
-                ArmoryQuestLogQuestTitle,
-                ArmoryQuestLogDescriptionTitle,
-                ArmoryQuestLogRewardTitleText,
-                ArmoryQuestLogItemChooseText
-            }
-            texts = {
-                ArmoryQuestLogObjectivesText,
-                ArmoryQuestLogSuggestedGroupNum,
-                ArmoryQuestLogQuestDescription,
-                ArmoryQuestLogItemChooseText,
-                ArmoryQuestLogItemReceiveText,
-                ArmoryQuestLogSpellLearnText,
-                ArmoryQuestLogPlayerTitleText,
-                ArmoryQuestLogTimerText
-            }
-        end
+    hooksecurefunc("ArmoryQuestFrameItems_Update", function()
+        local headers = {
+            ArmoryQuestLogQuestTitle,
+            ArmoryQuestLogDescriptionTitle,
+            ArmoryQuestLogRewardTitleText,
+            ArmoryQuestLogItemChooseText
+        };
+        local texts = {
+            ArmoryQuestLogObjectivesText,
+            ArmoryQuestLogSuggestedGroupNum,
+            ArmoryQuestLogQuestDescription,
+            ArmoryQuestLogItemChooseText,
+            ArmoryQuestLogItemReceiveText,
+            ArmoryQuestLogSpellLearnText,
+            ArmoryQuestLogPlayerTitleText,
+            ArmoryQuestLogTimerText
+        };
 
         for _, header in ipairs(headers) do
             header:SetTextColor(1, 0.80, 0.10)
@@ -1662,9 +1543,9 @@ local function SkinQuests()
         local requiredMoney = Armory:GetQuestLogRequiredMoney()
         if requiredMoney > 0 then
             if requiredMoney > Armory:GetMoney() then
-                _G[base.."RequiredMoneyText"]:SetTextColor(0.6, 0.6, 0.6)
+                _G["ArmoryQuestLogRequiredMoneyText"]:SetTextColor(0.6, 0.6, 0.6)
             else
-                _G[base.."RequiredMoneyText"]:SetTextColor(1, 0.8, 0.1)
+                _G["ArmoryQuestLogRequiredMoneyText"]:SetTextColor(1, 0.8, 0.1)
             end
         end
 
@@ -1676,7 +1557,7 @@ local function SkinQuests()
             _, objType, finished = Armory:GetQuestLogLeaderBoard(i)
             if objType ~= "spell" then
                 numVisibleObjectives = numVisibleObjectives + 1
-                local objective = _G[base.."Objective"..numVisibleObjectives]
+                local objective = _G["ArmoryQuestLogObjective"..numVisibleObjectives]
 
                 if objective then
                     if finished then
@@ -1689,7 +1570,7 @@ local function SkinQuests()
         end
 
         for i = 1, MAX_NUM_ITEMS do
-            local questItem = _G[base.."Item"..i]
+            local questItem = _G["ArmoryQuestLogItem"..i]
             if not questItem:IsShown() then break end
 
             local point, relativeTo, relativePoint, x, y = questItem:GetPoint()
@@ -1699,16 +1580,6 @@ local function SkinQuests()
                 questItem:Point(point, relativeTo, relativePoint, 0, -4)
             elseif point then
                 questItem:Point(point, relativeTo, relativePoint, 4, 0)
-            end
-
-            if U.IsWrath then
-                local quality
-                if ( questItem.type == "reward" ) then
-                    quality = select(4, Armory:GetQuestLogRewardInfo(questItem:GetID()))
-                elseif ( questItem.type == "choice" ) then
-                    quality = select(4, Armory:GetQuestLogChoiceInfo(questItem:GetID()))
-                end
-                U.ColorItemBorder(questItem, quality)
             end
 
             questItem.Name:SetTextColor(1, 1, 1)
@@ -2305,9 +2176,7 @@ local function SkinQTips()
                 if key == name then
                     if not U.IsClassic then
                         tooltip:SetScript("OnShow", function(self)
-                            if not U.IsWrath then
-                                U.SkinTooltip(self)
-                            end
+                            U.SkinTooltip(self)
                             if self.slider then
                                 U.SkinSliderFrame(self.slider)
                             end
@@ -2351,15 +2220,10 @@ do
     SkinTradeSkill()
     SkinFind()
     SkinLookup()
-    if U.IsRetail or U.IsWrath then
-        SkinAchievements()
-    end
     if U.IsRetail then
+        SkinAchievements()
         SkinOverlay()
         SkinGearSet()
         SkinArtifacts()
-    end
-    if U.IsWrath then
-        SkinGlyphs()
     end
 end
