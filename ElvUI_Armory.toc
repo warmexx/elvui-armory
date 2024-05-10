@@ -4,7 +4,7 @@
 #@end-version-retail@
 ## Interface-Classic: 11502
 #@version-classic@
-## Title: |cff1784d1ElvUI Classic|r Armory
+## Title: |cff1784d1ElvUI|r |cfd9b9b9bClassic|r Armory
 #@end-version-classic@
 ## Version: @project-version@
 ## Author: Warmexx [Neighbours]
