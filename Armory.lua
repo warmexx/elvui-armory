@@ -1026,29 +1026,7 @@ local function UpdateCurrencySkins()
 
             if button.icon then button.icon:SetTexCoord(unpack(U.TexCoords)) end
 
-            if button.expandIcon then
-                if not button.highlightTexture then
-                    button.highlightTexture = button:CreateTexture(button:GetName().."HighlightTexture", "HIGHLIGHT")
-                    button.highlightTexture:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight")
-                    button.highlightTexture:SetBlendMode("ADD")
-                    button.highlightTexture:SetInside(button.expandIcon)
-
-                    button.expandIcon:Point("LEFT", 4, 0)
-                    button.expandIcon:Size(15, 15)
-                end
-
-                if button.isHeader then
-                    if button.isExpanded then
-                        U.SkinPlusMinButton(button.expandIcon, "MinusButton")
-                    else
-                        U.SkinPlusMinButton(button.expandIcon, "PlusButton")
-                    end
-
-                    button.highlightTexture:Show()
-                else
-                    button.highlightTexture:Hide()
-                end
-            end
+            U.SkinPlusMinButton(button)
         end
     end
 end
