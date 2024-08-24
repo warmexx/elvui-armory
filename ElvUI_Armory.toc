@@ -1,4 +1,4 @@
-## Interface: 110000
+## Interface: 110002
 #@version-retail@
 ## Title: |cff1784d1ElvUI|r Armory
 #@end-version-retail@
