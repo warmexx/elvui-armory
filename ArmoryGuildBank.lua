@@ -43,10 +43,10 @@ local function SkinInventory()
         U.SkinPlusMinButton(ArmoryInventoryCollapseAllButton)
     end)
 
-    U.SkinTab(ArmoryInventoryFrameTab3)
+    U.SkinTab(ArmoryInventoryFrameTab4)
     if U.IsRetail then
-        ArmoryInventoryFrameTab3:ClearAllPoints()
-        ArmoryInventoryFrameTab3:Point("LEFT", ArmoryInventoryFrameTab2, "RIGHT", -5, 0)
+        ArmoryInventoryFrameTab4:ClearAllPoints()
+        ArmoryInventoryFrameTab4:Point("LEFT", ArmoryInventoryFrameTab3, "RIGHT", -5, 0)
     end
 end
 
@@ -73,7 +73,7 @@ local function SkinListGuildBank()
     end
 
     ArmoryListGuildBankFrameTab1:ClearAllPoints()
-    ArmoryListGuildBankFrameTab1:Point("TOPLEFT", ArmoryListGuildBankFrame, "BOTTOMLEFT", 19, 2)
+    ArmoryListGuildBankFrameTab1:Point("TOPLEFT", ArmoryListGuildBankFrame, "BOTTOMLEFT", 10, 2)
     if U.IsRetail then
         ArmoryListGuildBankFrameTab2:ClearAllPoints()
         ArmoryListGuildBankFrameTab2:Point("LEFT", ArmoryListGuildBankFrameTab1, "RIGHT", -5, 0)
@@ -138,7 +138,7 @@ local function SkinIconGuildBank()
     ArmoryIconGuildBankFramePersonalCheckButton:Point("LEFT", ArmoryGuildBankFactionFrame, "RIGHT", 10, 6)
 
     ArmoryIconGuildBankFrameTab1:ClearAllPoints()
-    ArmoryIconGuildBankFrameTab1:Point("TOPLEFT", ArmoryIconGuildBankFrame, "BOTTOMLEFT", 19, 2)
+    ArmoryIconGuildBankFrameTab1:Point("TOPLEFT", ArmoryIconGuildBankFrame, "BOTTOMLEFT", 10, 2)
     if U.IsRetail then
         ArmoryIconGuildBankFrameTab2:ClearAllPoints()
         ArmoryIconGuildBankFrameTab2:Point("LEFT", ArmoryIconGuildBankFrameTab1, "RIGHT", -5, 0)
