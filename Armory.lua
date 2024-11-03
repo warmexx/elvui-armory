@@ -112,98 +112,98 @@ end
 
 local function SkinOptions()
     local checkBoxes = {
-        ArmoryOptionsPanelEnable or ArmoryOptionsPanel.Enable,
-        ArmoryOptionsPanelSearchAll or ArmoryOptionsPanel.SearchAll,
-        ArmoryOptionsPanelLastViewed or ArmoryOptionsPanel.LastViewed,
-        ArmoryOptionsPanelPerCharacter or ArmoryOptionsPanel.PerCharacter,
-        ArmoryOptionsPanelShowAltEquip or ArmoryOptionsPanel.ShowAltEquip,
-        ArmoryOptionsPanelShowUnequip or ArmoryOptionsPanel.ShowUnequip,
-        ArmoryOptionsPanelShowEqcTooltips or ArmoryOptionsPanel.ShowEqcTooltips,
-        ArmoryOptionsPanelPauseInCombat or ArmoryOptionsPanel.PauseInCombat,
-        ArmoryOptionsPanelPauseInInstance or ArmoryOptionsPanel.PauseInInstance,
-        ArmoryOptionsPanelScanOnEnter or ArmoryOptionsPanel.ScanOnEnter,
-        ArmoryOptionsPanelFactionFilter or ArmoryOptionsPanel.FactionFilter,
-        ArmoryOptionsPanelClassColors or ArmoryOptionsPanel.ClassColors,
-        ArmoryOptionsPanelScaleOnMouseWheel or ArmoryOptionsPanel.ScaleOnMouseWheel,
+        ArmoryOptionsPanel.Enable,
+        ArmoryOptionsPanel.SearchAll,
+        ArmoryOptionsPanel.LastViewed,
+        ArmoryOptionsPanel.PerCharacter,
+        ArmoryOptionsPanel.ShowAltEquip,
+        ArmoryOptionsPanel.ShowUnequip,
+        ArmoryOptionsPanel.ShowEqcTooltips,
+        ArmoryOptionsPanel.PauseInCombat,
+        ArmoryOptionsPanel.PauseInInstance,
+        ArmoryOptionsPanel.ScanOnEnter,
+        ArmoryOptionsPanel.FactionFilter,
+        ArmoryOptionsPanel.ClassColors,
+        ArmoryOptionsPanel.ScaleOnMouseWheel,
 
-        ArmoryOptionsMinimapPanelMinimapButton or ArmoryOptionsMinimapPanel.MinimapButton,
-        ArmoryOptionsMinimapPanelGlobalMinimapButton or ArmoryOptionsMinimapPanel.GlobalMinimapButton,
-        ArmoryOptionsMinimapPanelHideIfToolbar or ArmoryOptionsMinimapPanel.HideIfToolbar,
-        ArmoryOptionsMinimapPanelGlobalPositionButton or ArmoryOptionsMinimapPanel.GlobalPositionButton,
+        ArmoryOptionsMinimapPanel.MinimapButton,
+        ArmoryOptionsMinimapPanel.GlobalMinimapButton,
+        ArmoryOptionsMinimapPanel.HideIfToolbar,
+        ArmoryOptionsMinimapPanel.GlobalPositionButton,
 
-        ArmoryOptionsModulePanelInventory or ArmoryOptionsModulePanel.Inventory,
-        ArmoryOptionsModulePanelQuestLog or ArmoryOptionsModulePanel.QuestLog,
-        ArmoryOptionsModulePanelSpellBook or ArmoryOptionsModulePanel.SpellBook,
-        ArmoryOptionsModulePanelTradeSkills or ArmoryOptionsModulePanel.TradeSkills,
-        ArmoryOptionsModulePanelSocial or ArmoryOptionsModulePanel.Social,
-        ArmoryOptionsModulePanelSharing or ArmoryOptionsModulePanel.Sharing,
-        ArmoryOptionsModulePanelPets or ArmoryOptionsModulePanel.Pets,
-        ArmoryOptionsModulePanelTalents or ArmoryOptionsModulePanel.Talents,
-        ArmoryOptionsModulePanelPVP or ArmoryOptionsModulePanel.PVP,
-        ArmoryOptionsModulePanelReputation or ArmoryOptionsModulePanel.Reputation,
-        ArmoryOptionsModulePanelRaid or ArmoryOptionsModulePanel.Raid,
-        ArmoryOptionsModulePanelBuffs or ArmoryOptionsModulePanel.Buffs,
+        ArmoryOptionsModulePanel.Inventory,
+        ArmoryOptionsModulePanel.QuestLog,
+        ArmoryOptionsModulePanel.SpellBook,
+        ArmoryOptionsModulePanel.TradeSkills,
+        ArmoryOptionsModulePanel.Social,
+        ArmoryOptionsModulePanel.Sharing,
+        ArmoryOptionsModulePanel.Pets,
+        ArmoryOptionsModulePanel.Talents,
+        ArmoryOptionsModulePanel.PVP,
+        ArmoryOptionsModulePanel.Reputation,
+        ArmoryOptionsModulePanel.Raid,
+        ArmoryOptionsModulePanel.Buffs,
 
-        ArmoryOptionsSharePanelShareProfessions or ArmoryOptionsSharePanel.ShareProfessions,
-        ArmoryOptionsSharePanelShareQuests or ArmoryOptionsSharePanel.ShareQuests,
-        ArmoryOptionsSharePanelShareCharacter or ArmoryOptionsSharePanel.ShareCharacter,
-        ArmoryOptionsSharePanelShareItems or ArmoryOptionsSharePanel.ShareItems,
-        ArmoryOptionsSharePanelShareAsAlt or ArmoryOptionsSharePanel.ShareAsAlt,
-        ArmoryOptionsSharePanelChannelCheck or ArmoryOptionsSharePanel.Channel.Check,
-        ArmoryOptionsSharePanelShareInInstance or ArmoryOptionsSharePanel.ShareInInstance,
-        ArmoryOptionsSharePanelShareInCombat or ArmoryOptionsSharePanel.ShareInCombat,
-        ArmoryOptionsSharePanelShowShareMessages or ArmoryOptionsSharePanel.ShowShareMessages,
-        ArmoryOptionsSharePanelShareAll or ArmoryOptionsSharePanel.ShareAll,
+        ArmoryOptionsSharePanel.ShareProfessions,
+        ArmoryOptionsSharePanel.ShareQuests,
+        ArmoryOptionsSharePanel.ShareCharacter,
+        ArmoryOptionsSharePanel.ShareItems,
+        ArmoryOptionsSharePanel.ShareAsAlt,
+        ArmoryOptionsSharePanel.Channel.Check,
+        ArmoryOptionsSharePanel.ShareInInstance,
+        ArmoryOptionsSharePanel.ShareInCombat,
+        ArmoryOptionsSharePanel.ShowShareMessages,
+        ArmoryOptionsSharePanel.ShareAll,
 
-        ArmoryOptionsTooltipPanelItemCountPerSlot or ArmoryOptionsTooltipPanel.ItemCountPerSlot,
-        ArmoryOptionsTooltipPanelGlobalItemCount or ArmoryOptionsTooltipPanel.GlobalItemCount,
-        ArmoryOptionsTooltipPanelCrossFactionItemCount or ArmoryOptionsTooltipPanel.CrossFactionItemCount,
-        ArmoryOptionsTooltipPanelShowItemCountCheck or ArmoryOptionsTooltipPanel.ShowItemCount,
-        ArmoryOptionsTooltipPanelShowItemCountTotalsCheck or ArmoryOptionsTooltipPanel.ShowItemCountTotals,
-        ArmoryOptionsTooltipPanelShowKnownByCheck or ArmoryOptionsTooltipPanel.ShowKnownBy,
-        ArmoryOptionsTooltipPanelShowHasSkillCheck or ArmoryOptionsTooltipPanel.ShowHasSkill,
-        ArmoryOptionsTooltipPanelShowCanLearnCheck or ArmoryOptionsTooltipPanel.ShowCanLearn,
-        ArmoryOptionsTooltipPanelShowCraftersCheck or ArmoryOptionsTooltipPanel.ShowCrafters,
+        ArmoryOptionsTooltipPanel.ItemCountPerSlot,
+        ArmoryOptionsTooltipPanel.GlobalItemCount,
+        ArmoryOptionsTooltipPanel.CrossFactionItemCount,
+        ArmoryOptionsTooltipPanel.ShowItemCount,
+        ArmoryOptionsTooltipPanel.ShowItemCountTotals,
+        ArmoryOptionsTooltipPanel.ShowKnownBy,
+        ArmoryOptionsTooltipPanel.ShowHasSkill,
+        ArmoryOptionsTooltipPanel.ShowCanLearn,
+        ArmoryOptionsTooltipPanel.ShowCrafters,
 
-        ArmoryOptionsFindPanelSearchWindow or ArmoryOptionsFindPanel.SearchWindow,
-        ArmoryOptionsFindPanelSearchRealms or ArmoryOptionsFindPanel.SearchRealms,
-        ArmoryOptionsFindPanelSearchExtended or ArmoryOptionsFindPanel.SearchExtended,
-        ArmoryOptionsFindPanelSearchRestrictive or ArmoryOptionsFindPanel.SearchRestrictive,
-        ArmoryOptionsFindPanelSearchAltClick or ArmoryOptionsFindPanel.SearchAltClick,
+        ArmoryOptionsFindPanel.SearchWindow,
+        ArmoryOptionsFindPanel.SearchRealms,
+        ArmoryOptionsFindPanel.SearchExtended,
+        ArmoryOptionsFindPanel.SearchRestrictive,
+        ArmoryOptionsFindPanel.SearchAltClick,
 
-        ArmoryOptionsExpirationPanelIgnoreAlts or ArmoryOptionsExpirationPanel.IgnoreAlts,
-        ArmoryOptionsExpirationPanelCheckVisit or ArmoryOptionsExpirationPanel.CheckVisit,
-        ArmoryOptionsExpirationPanelExcludeVisit or ArmoryOptionsExpirationPanel.ExcludeVisit,
-        ArmoryOptionsExpirationPanelLogonVisit or ArmoryOptionsExpirationPanel.LogonVisit,
-        ArmoryOptionsExpirationPanelCheckCount or ArmoryOptionsExpirationPanel.CheckCount,
-        ArmoryOptionsExpirationPanelHideCount or ArmoryOptionsExpirationPanel.HideCount,
-        ArmoryOptionsExpirationPanelLogonCount or ArmoryOptionsExpirationPanel.LogonCount,
+        ArmoryOptionsExpirationPanel.IgnoreAlts,
+        ArmoryOptionsExpirationPanel.CheckVisit,
+        ArmoryOptionsExpirationPanel.ExcludeVisit,
+        ArmoryOptionsExpirationPanel.LogonVisit,
+        ArmoryOptionsExpirationPanel.CheckCount,
+        ArmoryOptionsExpirationPanel.HideCount,
+        ArmoryOptionsExpirationPanel.LogonCount,
 
-        ArmoryOptionsSummaryPanelSummary or ArmoryOptionsSummaryPanel.Summary,
-        ArmoryOptionsSummaryPanelClass or ArmoryOptionsSummaryPanel.Class,
-        ArmoryOptionsSummaryPanelLevel or ArmoryOptionsSummaryPanel.Level,
-        ArmoryOptionsSummaryPanelZone or ArmoryOptionsSummaryPanel.Zone,
-        ArmoryOptionsSummaryPanelXP or ArmoryOptionsSummaryPanel.XP,
-        ArmoryOptionsSummaryPanelPlayed or ArmoryOptionsSummaryPanel.Played,
-        ArmoryOptionsSummaryPanelOnline or ArmoryOptionsSummaryPanel.Online,
-        ArmoryOptionsSummaryPanelMoney or ArmoryOptionsSummaryPanel.Money,
-        ArmoryOptionsSummaryPanelRaidInfo or ArmoryOptionsSummaryPanel.RaidInfo,
-        ArmoryOptionsSummaryPanelQuest or ArmoryOptionsSummaryPanel.Quest,
-        ArmoryOptionsSummaryPanelExpiration or ArmoryOptionsSummaryPanel.Expiration,
-        ArmoryOptionsSummaryPanelTradeSkills or ArmoryOptionsSummaryPanel.TradeSkills,
+        ArmoryOptionsSummaryPanel.Summary,
+        ArmoryOptionsSummaryPanel.Class,
+        ArmoryOptionsSummaryPanel.Level,
+        ArmoryOptionsSummaryPanel.Zone,
+        ArmoryOptionsSummaryPanel.XP,
+        ArmoryOptionsSummaryPanel.Played,
+        ArmoryOptionsSummaryPanel.Online,
+        ArmoryOptionsSummaryPanel.Money,
+        ArmoryOptionsSummaryPanel.RaidInfo,
+        ArmoryOptionsSummaryPanel.Quest,
+        ArmoryOptionsSummaryPanel.Expiration,
+        ArmoryOptionsSummaryPanel.TradeSkills,
 
-        ArmoryOptionsMiscPanelLDBLabel or ArmoryOptionsMiscPanel.LDBLabel,
-        ArmoryOptionsMiscPanelEncoding or ArmoryOptionsMiscPanel.Encoding,
-        ArmoryOptionsMiscPanelEnhancedTips or ArmoryOptionsMiscPanel.EnhancedTips,
-        ArmoryOptionsMiscPanelSystemWarnings or ArmoryOptionsMiscPanel.SystemWarnings
+        ArmoryOptionsMiscPanel.LDBLabel,
+        ArmoryOptionsMiscPanel.Encoding,
+        ArmoryOptionsMiscPanel.EnhancedTips,
+        ArmoryOptionsMiscPanel.SystemWarnings
     }
     if U.IsRetail then
-        table.insert(checkBoxes, ArmoryOptionsModulePanelAchievements or ArmoryOptionsModulePanel.Achievements)
-        table.insert(checkBoxes, ArmoryOptionsModulePanelStatistics or ArmoryOptionsModulePanel.Statistics)
+        table.insert(checkBoxes, ArmoryOptionsModulePanel.Achievements)
+        table.insert(checkBoxes, ArmoryOptionsModulePanel.Statistics)
 
-        table.insert(checkBoxes, ArmoryOptionsTooltipPanelShowAchievementsCheck or ArmoryOptionsTooltipPanel.ShowAchievements)
-        table.insert(checkBoxes, ArmoryOptionsTooltipPanelAchievementProgressColorCheck or ArmoryOptionsTooltipPanel.AchievementInProgress)
-        table.insert(checkBoxes, ArmoryOptionsTooltipPanelShowGems or ArmoryOptionsTooltipPanel.ShowGems)
+        table.insert(checkBoxes, ArmoryOptionsTooltipPanel.ShowAchievements)
+        table.insert(checkBoxes, ArmoryOptionsTooltipPanel.AchievementInProgress)
+        table.insert(checkBoxes, ArmoryOptionsTooltipPanel.ShowGems)
 
         table.insert(checkBoxes, ArmoryOptionsModulePanel.Currency)
         table.insert(checkBoxes, ArmoryOptionsModulePanel.Artifacts)
@@ -231,28 +231,25 @@ local function SkinOptions()
         table.insert(checkBoxes, ArmoryOptionsMiscPanel.Collapse)
         table.insert(checkBoxes, ArmoryOptionsMiscPanel.CheckButton)
     else
-        table.insert(checkBoxes, ArmoryOptionsModulePanelSkills)
-        table.insert(checkBoxes, ArmoryOptionsMiscPanelExtendedTradeSkills)
+        table.insert(checkBoxes, ArmoryOptionsModulePanel.Skills)
+        table.insert(checkBoxes, ArmoryOptionsMiscPanel.ExtendedTradeSkills)
     end
     local sliders = {
-        ArmoryOptionsPanelScaleSlider or ArmoryOptionsPanel.ScaleSlider,
-        ArmoryOptionsMinimapPanelAngleSlider or ArmoryOptionsMinimapPanel.AngleSlider,
-        ArmoryOptionsExpirationPanelExpDaysSlider or ArmoryOptionsExpirationPanel.ExpDaysSlider,
-        ArmoryOptionsSummaryPanelDelaySlider or ArmoryOptionsSummaryPanel.DelaySlider
+        ArmoryOptionsPanel.ScaleSlider,
+        ArmoryOptionsMinimapPanel.AngleSlider,
+        ArmoryOptionsExpirationPanel.ExpDaysSlider,
+        ArmoryOptionsSummaryPanel.DelaySlider
     }
     local dropDownBoxes = {
-        ArmoryOptionsFindPanelDefaultSearchTypeDropDown or ArmoryOptionsFindPanelDefaultSearchType,
-        ArmoryOptionsMiscPanelWarningSoundDropDown or ArmoryOptionsMiscPanelWarningSound,
+        ArmoryOptionsFindPanelDefaultSearchType,
+        ArmoryOptionsMiscPanelWarningSound,
     }
-    if not U.IsRetail then
-        table.insert(dropDownBoxes, ArmoryOptionsPanelWeeklyResetDropDown)
-    end
     local buttons = {
-        ArmoryOptionsPanelResetScreen or ArmoryOptionsPanel.ResetScreen,
-        ArmoryOptionsExpirationPanelCheck or ArmoryOptionsExpirationPanel.Check
+        ArmoryOptionsPanel.ResetScreen,
+        ArmoryOptionsExpirationPanel.Check
     }
     local editBoxes = {
-        ArmoryOptionsSharePanelChannelName or ArmoryOptionsSharePanel.Channel.Name
+        ArmoryOptionsSharePanel.Channel.Name
     }
 
     for _, checkBox in ipairs(checkBoxes) do
