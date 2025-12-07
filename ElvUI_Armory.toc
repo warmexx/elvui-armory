@@ -1,8 +1,8 @@
-## Interface: 110200
+## Interface: 110207
 #@version-retail@
 ## Title: |cff1784d1ElvUI|r Armory
 #@end-version-retail@
-## Interface-Classic: 11507
+## Interface-Classic: 11508
 #@version-classic@
 ## Title: |cff1784d1ElvUI|r |cfd9b9b9bClassic|r Armory
 #@end-version-classic@
