@@ -492,10 +492,8 @@ local function SkinArmoryFrame()
     ArmoryFrameRightButton:Point("RIGHT", ArmoryFrameCloseButton, "LEFT", 6, -2)
 
     -- Title and character header
-    local titleText = ArmoryFrameTitleText or ArmoryFrame.TitleText
-    titleText:ClearAllPoints()
-    ArmoryLevelText:ClearAllPoints()
-    titleText:Point("TOP", ArmoryFrame, "TOP", -6, -4)
+    local titleText =  ArmoryFrame.TitleText or ArmoryFrameTitleText
+    titleText:Point("LEFT", ArmoryFrame, "LEFT", 40, 0)
     ArmoryLevelText:Point("TOP", titleText, "BOTTOM", 0, -6)
 
     -- Bottom tabs
