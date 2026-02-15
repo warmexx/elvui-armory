@@ -8,7 +8,7 @@ local SUMMARY_CURRENCIES_DISPLAYED = 8
 
 local MAX_LINE_TABS = 10
 
-local NUM_PET_SLOTS = U.IsClassic and 4 or 5
+local NUM_PET_SLOTS = U.IsRetail and 5 or 4
 local NUM_PET_ABILITIES = 6
 
 local MAX_RAID_INFOS = 20
@@ -391,6 +391,14 @@ end
 
 local function SkinPaperDollStats()
     ArmoryAttributesFrame:StripTextures()
+    if U.IsBCC then
+        ArmoryAttributesFrame:Point("TOPLEFT", 52, -289)
+
+        U.SkinDropDownBox(ArmoryPlayerStatFrameLeftDropDown, 142)
+        U.SkinDropDownBox(ArmoryPlayerStatFrameRightDropDown, 142)
+        ArmoryPlayerStatLeftTop:Point("TOPLEFT", -4, 0)
+        ArmoryPlayerStatRightTop:Point("TOPLEFT", ArmoryPlayerStatLeftTop, "TOPRIGHT", 3, 0)
+    end
 end
 
 local ResistanceCoords = {
@@ -722,6 +730,10 @@ local function SkinTalents(frameName)
 
         U.SkinScrollBar(scrollBar)
         scrollBar:Point("TOPLEFT", scrollFrame, "TOPRIGHT", 10, -16)
+ 
+        if U.IsBCC then
+            ArmoryTalentFrameTalentPointsText:Point("BOTTOMRIGHT", ArmoryTalentFrame, "BOTTOMLEFT", 220, 84)
+        end
 
         for i = 1, (ARMORY_MAX_NUM_TALENTS or MAX_NUM_TALENTS) do
             local talent = _G[frameName.."Talent"..i]
@@ -815,6 +827,35 @@ local function SkinPVP()
         ArmoryHonorFrameProgressButton:CreateBackdrop("Transparent")
         ArmoryHonorFrameProgressBar:Width(322)
         ArmoryHonorFrameProgressBar:SetStatusBarTexture(c.media.normTex)
+    elseif U.IsBCC then
+        for i = 1, MAX_ARENA_TEAMS do
+            local pvpTeam = _G["ArmoryPVPTeam"..i]
+
+            pvpTeam:StripTextures()
+            pvpTeam:CreateBackdrop("Default")
+            pvpTeam.backdrop:Point("TOPLEFT", 9, -4)
+            pvpTeam.backdrop:Point("BOTTOMRIGHT", -24, 3)
+
+            _G["ArmoryPVPTeam"..i.."Highlight"]:Kill()
+        end
+
+        local PVPTeamDetails = ArmoryPVPTeamDetails
+        PVPTeamDetails:StripTextures()
+        PVPTeamDetails:SetTemplate("Transparent")
+
+        for i = 1, 5 do
+            local header = _G["ArmoryPVPTeamDetailsFrameColumnHeader"..i]
+            header:StripTextures()
+            header:StyleButton()
+        end
+
+        for i = 1, 10 do
+            local button = _G["ArmoryPVPTeamDetailsButton"..i]
+            button:Width(335)
+            U.HandleButtonHighlight(button)
+        end
+
+        U.SkinCloseButton(ArmoryPVPTeamDetailsCloseButton)
     else
         ArmoryPVPFrame:SetAllPoints()
 

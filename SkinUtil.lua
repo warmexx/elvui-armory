@@ -5,6 +5,7 @@ local GetItemQualityColor = C_Item.GetItemQualityColor or GetItemQualityColor;
 
 U.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 U.IsClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+U.IsBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 
 U.TexCoords = { 0.1, 0.9, 0.1, 0.9 }
 

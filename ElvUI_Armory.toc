@@ -6,6 +6,10 @@
 #@version-classic@
 ## Title: |cff1784d1ElvUI|r |cfd9b9b9bClassic|r Armory
 #@end-version-classic@
+## Interface-BCC: 20505
+#@version-bcc@
+## Title: |cff1784d1ElvUI TBC|r Armory
+#@end-version-bcc@
 ## Version: @project-version@
 ## Author: Warmexx [Neighbours]
 ## Dependencies: ElvUI, Armory
